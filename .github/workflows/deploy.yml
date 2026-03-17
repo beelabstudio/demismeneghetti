@@ -75,7 +75,7 @@ jobs:
           local-dir: './'
 
           # Remote directory — FTP root is already public_html on this server
-          server-dir: './'
+          server-dir: './demismeneghetti.com.br'
 
           # Protocol: Use FTPS (FTP over TLS) for security
           # Options: ftp, ftps, ftps-legacy
