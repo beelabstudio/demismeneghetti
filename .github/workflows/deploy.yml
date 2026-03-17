@@ -1,0 +1,113 @@
+# ============================================================
+# GITHUB ACTIONS WORKFLOW - FTP DEPLOY TO GODADDY
+# ============================================================
+#
+# This workflow automatically deploys the website to GoDaddy
+# via FTP whenever changes are pushed to the main branch.
+#
+# REQUIRED GITHUB SECRETS:
+# --------------------------------------------------------
+# Before using this workflow, you must configure the following
+# secrets in your GitHub repository settings:
+#
+#   1. FTP_SERVER
+#      - Your GoDaddy FTP server hostname
+#      - Example: ftp.demismeneghetti.com.br
+#
+#   2. FTP_USERNAME
+#      - Your FTP username (usually your hosting username)
+#      - Example: username@demismeneghetti.com.br
+#
+#   3. FTP_PASSWORD
+#      - Your FTP password
+#      - Keep this secure and never commit it to the repository
+#
+#   4. FTP_PORT (optional)
+#      - FTP port number, defaults to 21 if not specified
+#
+# HOW TO ADD SECRETS:
+# --------------------------------------------------------
+# 1. Go to your GitHub repository
+# 2. Click on "Settings" tab
+# 3. In the left sidebar, click "Secrets and variables" > "Actions"
+# 4. Click "New repository secret"
+# 5. Add each secret with its name and value
+#
+# ============================================================
+
+name: Deploy to GoDaddy FTP
+
+# Trigger: Run workflow when pushing to main branch
+on:
+  push:
+    branches:
+      - main
+
+  # Allow manual trigger from GitHub Actions tab
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  web-deploy:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch the last 2 commits for efficient diff-based deployment
+          fetch-depth: 2
+
+      # Step 2: Deploy to FTP Server
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          # FTP Server Configuration (from GitHub Secrets)
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+
+          # Local directory to upload (current directory = repository root)
+          local-dir: './'
+
+          # Remote directory — FTP root is already public_html on this server
+          server-dir: './'
+
+          # Protocol: Use FTPS (FTP over TLS) for security
+          # Options: ftp, ftps, ftps-legacy
+          protocol: ftps
+
+          # Port (default is 21 for FTP/FTPS on GoDaddy)
+          port: ${{ secrets.FTP_PORT != '' && secrets.FTP_PORT || '21' }}
+
+          # Exclude files/directories from upload
+          # These files should not be deployed to production
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.github/**
+            **/README.md
+            **/.DS_Store
+            **/*.log
+
+          # Logging level for debugging
+          # Options: minimal, standard, verbose
+          log-level: standard
+
+          # Dangerous: Set to true to delete files on server not in repo
+          # WARNING: Be careful with this option!
+          # dangerous-clean-slate: false
+
+      # Step 3: Deployment notification
+      - name: Deployment Complete
+        run: |
+          echo "=========================================="
+          echo "Deployment completed successfully!"
+          echo "Website: https://demismeneghetti.com.br"
+          echo "Time: $(date)"
+          echo "=========================================="
