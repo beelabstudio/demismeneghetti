@@ -194,6 +194,13 @@ body {
   border-color: var(--accent);
 }
 
+.company-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .company-name {
   font-size: 0.95rem;
   font-weight: 600;
