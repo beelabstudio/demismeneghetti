@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Spec-Driven Development: QA-First na Era da IA — apresentação sobre práticas modernas de QA">
+  <meta name="theme-color" content="#1E2761">
+  <title>Spec-Driven Development: QA-First na Era da IA</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <main id="presentation" role="main" aria-label="Presentation slides">
+
+    <!-- ============================================================
+         SLIDE 1 — Title
+         ============================================================ -->
+    <section class="slide slide--title active" data-slide="1"
+             tabindex="-1" aria-label="Slide 1: Title">
+      <div class="slide__content">
+        <span class="slide__badge">BrowserStack Meetup · 2025</span>
+        <h1 class="title-h1">Spec-Driven<br>Development</h1>
+        <h2 class="title-h2">
+          <span data-lang="pt">QA-First na Era da IA</span>
+          <span data-lang="en">QA-First in the Age of AI</span>
+        </h2>
+        <div class="speaker-block">
+          <p class="speaker-block__name">Demis Meneghetti</p>
+          <p class="speaker-block__role">QA Engineer &amp; Tech Lead</p>
+        </div>
+      </div>
+      <div class="slide__decoration" aria-hidden="true">
+        <span class="deco-circle deco-circle--1"></span>
+        <span class="deco-circle deco-circle--2"></span>
+        <span class="deco-circle deco-circle--3"></span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 2 — The Problem
+         ============================================================ -->
+    <section class="slide slide--problem" data-slide="2"
+             tabindex="-1" aria-label="Slide 2: The Problem">
+      <div class="slide__content">
+        <h2 class="slide__heading">
+          <span data-lang="pt">O Problema</span>
+          <span data-lang="en">The Problem</span>
+        </h2>
+        <ul class="problem-list" role="list">
+          <li class="problem-list__item">
+            <span class="problem-list__icon" aria-hidden="true">⚡</span>
+            <span data-lang="pt">Specs ambíguas</span>
+            <span data-lang="en">Ambiguous specs</span>
+          </li>
+          <li class="problem-list__item">
+            <span class="problem-list__icon" aria-hidden="true">🔍</span>
+            <span data-lang="pt">QA testando sem clareza</span>
+            <span data-lang="en">QA testing without clarity</span>
+          </li>
+          <li class="problem-list__item">
+            <span class="problem-list__icon" aria-hidden="true">🕸️</span>
+            <span data-lang="pt">Automação frágil</span>
+            <span data-lang="en">Fragile automation</span>
+          </li>
+          <li class="problem-list__item">
+            <span class="problem-list__icon" aria-hidden="true">🐛</span>
+            <span data-lang="pt">Bugs em produção apesar dos testes</span>
+            <span data-lang="en">Production bugs despite tests</span>
+          </li>
+        </ul>
+        <blockquote class="slide__quote">
+          <p>
+            <span data-lang="pt">"Não é falta de testes.<br>É falta de um <strong>contrato claro</strong>."</span>
+            <span data-lang="en">"Not a lack of tests.<br>Lack of a <strong>clear contract</strong>."</span>
+          </p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 3 — BDD: What You Know
+         ============================================================ -->
+    <section class="slide slide--bdd" data-slide="3"
+             tabindex="-1" aria-label="Slide 3: BDD">
+      <div class="slide__content">
+        <span class="slide__tag">
+          <span data-lang="pt">Contexto BDD</span>
+          <span data-lang="en">BDD Context</span>
+        </span>
+        <h2 class="slide__heading">
+          <span data-lang="pt">BDD — O Que Você Já Conhece</span>
+          <span data-lang="en">BDD — What You Know</span>
+        </h2>
+        <div class="two-col">
+          <div class="info-card">
+            <h3 class="info-card__heading">Behavior-Driven Development</h3>
+            <ul class="info-card__list">
+              <li>
+                <span data-lang="pt">Linguagem natural (Gherkin / Cucumber)</span>
+                <span data-lang="en">Natural language (Gherkin / Cucumber)</span>
+              </li>
+              <li>
+                <span data-lang="pt">QA escreve cenários antes do código</span>
+                <span data-lang="en">QA writes scenarios before code</span>
+              </li>
+              <li>
+                <span data-lang="pt">Quebrou silos entre Dev, QA e Negócio</span>
+                <span data-lang="en">Broke silos between Dev, QA &amp; Business</span>
+              </li>
+            </ul>
+          </div>
+          <div class="info-card info-card--accent">
+            <h3 class="info-card__heading">
+              <span data-lang="pt">O Que Funcionou</span>
+              <span data-lang="en">What Worked</span>
+            </h3>
+            <ul class="info-card__list">
+              <li>
+                <span data-lang="pt">Quebrou barreiras de comunicação</span>
+                <span data-lang="en">Broke communication barriers</span>
+              </li>
+              <li>
+                <span data-lang="pt">Tornou specs executáveis</span>
+                <span data-lang="en">Made specs executable</span>
+              </li>
+              <li>
+                <span data-lang="pt">Alinhou equipes em torno do comportamento</span>
+                <span data-lang="en">Aligned teams around behavior</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="code-preview" role="region" aria-label="Gherkin example">
+          <pre><code>Feature: User Login
+  Scenario: Successful login
+    Given a registered user
+    When they enter valid credentials
+    Then they access the dashboard</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 4 — BDD: Where It Broke
+         ============================================================ -->
+    <section class="slide slide--bdd-break" data-slide="4"
+             tabindex="-1" aria-label="Slide 4: BDD Pain Points">
+      <div class="slide__content">
+        <span class="slide__tag slide__tag--warn">
+          <span data-lang="pt">Pontos de Dor</span>
+          <span data-lang="en">Pain Points</span>
+        </span>
+        <h2 class="slide__heading">
+          <span data-lang="pt">BDD — Onde Começou a Quebrar</span>
+          <span data-lang="en">BDD — Where It Started to Break</span>
+        </h2>
+        <div class="problem-grid">
+          <div class="problem-card">
+            <span class="problem-card__icon" aria-hidden="true">🌫️</span>
+            <p>
+              <span data-lang="pt">Gherkin ainda pode ser <strong>ambíguo</strong></span>
+              <span data-lang="en">Gherkin can still be <strong>ambiguous</strong></span>
+            </p>
+          </div>
+          <div class="problem-card">
+            <span class="problem-card__icon" aria-hidden="true">📈</span>
+            <p>
+              <span data-lang="pt">Cenários crescem em <strong>complexidade</strong></span>
+              <span data-lang="en">Scenarios grow in <strong>complexity</strong></span>
+            </p>
+          </div>
+          <div class="problem-card">
+            <span class="problem-card__icon" aria-hidden="true">📄</span>
+            <p>
+              <span data-lang="pt">Specs mudam, <strong>docs não</strong></span>
+              <span data-lang="en">Specs change, <strong>docs don't</strong></span>
+            </p>
+          </div>
+          <div class="problem-card">
+            <span class="problem-card__icon" aria-hidden="true">🔀</span>
+            <p>
+              <span data-lang="pt">Difícil versionar e <strong>revisar em PRs</strong></span>
+              <span data-lang="en">Hard to version and <strong>review in PRs</strong></span>
+            </p>
+          </div>
+          <div class="problem-card problem-card--wide">
+            <span class="problem-card__icon" aria-hidden="true">📋</span>
+            <p>
+              <span data-lang="pt">Foco em "dado/quando/então", não em <strong>contratos formais</strong></span>
+              <span data-lang="en">Focus on "given/when/then", not <strong>formal contracts</strong></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 5 — SDD: The Evolution
+         ============================================================ -->
+    <section class="slide slide--sdd" data-slide="5"
+             tabindex="-1" aria-label="Slide 5: SDD Evolution">
+      <div class="slide__content">
+        <span class="slide__tag slide__tag--success">
+          <span data-lang="pt">Evolução</span>
+          <span data-lang="en">Evolution</span>
+        </span>
+        <h2 class="slide__heading">
+          <span data-lang="pt">SDD — A Evolução</span>
+          <span data-lang="en">SDD — The Evolution</span>
+        </h2>
+        <div class="evolution-grid">
+          <div class="evolution-card">
+            <div class="evolution-card__icon" aria-hidden="true">📌</div>
+            <h3>
+              <span data-lang="pt">Fonte Única de Verdade</span>
+              <span data-lang="en">Single Source of Truth</span>
+            </h3>
+            <p>
+              <span data-lang="pt">A especificação é o contrato que todos compartilham</span>
+              <span data-lang="en">Specification is the contract everyone shares</span>
+            </p>
+          </div>
+          <div class="evolution-card">
+            <div class="evolution-card__icon" aria-hidden="true">📝</div>
+            <h3>
+              <span data-lang="pt">Formato Estruturado</span>
+              <span data-lang="en">Structured Format</span>
+            </h3>
+            <p>
+              <span data-lang="pt">Markdown, OpenAPI, YAML — legível por máquinas e humanos</span>
+              <span data-lang="en">Markdown, OpenAPI, YAML — machine &amp; human readable</span>
+            </p>
+          </div>
+          <div class="evolution-card">
+            <div class="evolution-card__icon" aria-hidden="true">🔄</div>
+            <h3>
+              <span data-lang="pt">Fluxo Spec-First</span>
+              <span data-lang="en">Spec-First Flow</span>
+            </h3>
+            <p>
+              <span data-lang="pt">A spec vem <strong>ANTES</strong> do código. Sempre.</span>
+              <span data-lang="en">Spec comes <strong>BEFORE</strong> code. Always.</span>
+            </p>
+          </div>
+          <div class="evolution-card">
+            <div class="evolution-card__icon" aria-hidden="true">✨</div>
+            <h3>
+              <span data-lang="pt">Artefatos Derivados</span>
+              <span data-lang="en">Derived Artifacts</span>
+            </h3>
+            <p>
+              <span data-lang="pt">Testes, código e docs derivam de uma única fonte</span>
+              <span data-lang="en">Tests, code, docs all derive from one source</span>
+            </p>
+          </div>
+        </div>
+        <div class="badge-row">
+          <span class="badge">
+            <span data-lang="pt">Versionamento + PR Review</span>
+            <span data-lang="en">Versioning + PR Review</span>
+          </span>
+          <span class="badge">
+            <span data-lang="pt">Contratos Formais</span>
+            <span data-lang="en">Formal Contracts</span>
+          </span>
+          <span class="badge">
+            <span data-lang="pt">Menos Ambiguidade</span>
+            <span data-lang="en">Less Ambiguity</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 6 — Traditional vs QA-First
+         ============================================================ -->
+    <section class="slide slide--comparison" data-slide="6"
+             tabindex="-1" aria-label="Slide 6: Traditional vs QA-First Flow">
+      <div class="slide__content">
+        <h2 class="slide__heading">
+          <span data-lang="pt">Fluxo Tradicional vs QA-First</span>
+          <span data-lang="en">Traditional vs QA-First Flow</span>
+        </h2>
+        <div class="flow-wrap">
+          <div class="flow flow--bad">
+            <h3 class="flow__label">
+              <span data-lang="pt">Tradicional</span>
+              <span data-lang="en">Traditional</span>
+            </h3>
+            <div class="flow__steps">
+              <span class="flow__step">
+                <span data-lang="pt">💡 Ideia</span>
+                <span data-lang="en">💡 Idea</span>
+              </span>
+              <span class="flow__arrow" aria-hidden="true">→</span>
+              <span class="flow__step">
+                <span data-lang="pt">💻 Código</span>
+                <span data-lang="en">💻 Code</span>
+              </span>
+              <span class="flow__arrow" aria-hidden="true">→</span>
+              <span class="flow__step">
+                <span data-lang="pt">🧪 Testes</span>
+                <span data-lang="en">🧪 Tests</span>
+              </span>
+              <span class="flow__arrow" aria-hidden="true">→</span>
+              <span class="flow__step flow__step--bad">🐛 Bug</span>
+            </div>
+          </div>
+          <div class="flow flow--good">
+            <h3 class="flow__label">QA-First</h3>
+            <div class="flow__steps">
+              <span class="flow__step">
+                <span data-lang="pt">💡 Ideia</span>
+                <span data-lang="en">💡 Idea</span>
+              </span>
+              <span class="flow__arrow" aria-hidden="true">→</span>
+              <span class="flow__step">📋 Spec</span>
+              <span class="flow__arrow" aria-hidden="true">→</span>
+              <span class="flow__step">
+                <span data-lang="pt">🧪 Testes</span>
+                <span data-lang="en">🧪 Tests</span>
+              </span>
+              <span class="flow__arrow" aria-hidden="true">→</span>
+              <span class="flow__step flow__step--good">
+                <span data-lang="pt">💻 Código ✓</span>
+                <span data-lang="en">💻 Code ✓</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="why-box">
+          <h3 class="why-box__heading">
+            <span data-lang="pt">Por Que a Ordem Importa</span>
+            <span data-lang="en">Why Order Matters</span>
+          </h3>
+          <div class="why-box__pills">
+            <span class="pill">
+              <span data-lang="pt">📜 Contratos claros</span>
+              <span data-lang="en">📜 Clear contracts</span>
+            </span>
+            <span class="pill">
+              <span data-lang="pt">🤝 Participação ampla</span>
+              <span data-lang="en">🤝 Broader participation</span>
+            </span>
+            <span class="pill">
+              <span data-lang="pt">🔨 Menos retrabalho</span>
+              <span data-lang="en">🔨 Less rework</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 7 — BDD vs SDD Table
+         ============================================================ -->
+    <section class="slide slide--table" data-slide="7"
+             tabindex="-1" aria-label="Slide 7: BDD vs SDD Comparison">
+      <div class="slide__content">
+        <h2 class="slide__heading">BDD vs SDD</h2>
+        <div class="table-wrap" role="region" aria-label="BDD vs SDD comparison table">
+          <table class="cmp-table">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <span data-lang="pt">Dimensão</span>
+                  <span data-lang="en">Dimension</span>
+                </th>
+                <th scope="col">BDD</th>
+                <th scope="col">SDD</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span data-lang="pt">Formato</span><span data-lang="en">Format</span></td>
+                <td>
+                  <span data-lang="pt">Linguagem Natural (Gherkin)</span>
+                  <span data-lang="en">Gherkin / Natural Language</span>
+                </td>
+                <td>Markdown / OpenAPI / YAML</td>
+              </tr>
+              <tr>
+                <td><span data-lang="pt">Foco</span><span data-lang="en">Focus</span></td>
+                <td>
+                  <span data-lang="pt">Cenários de comportamento</span>
+                  <span data-lang="en">Behavior scenarios</span>
+                </td>
+                <td>
+                  <span data-lang="pt">Contratos formais</span>
+                  <span data-lang="en">Formal contracts</span>
+                </td>
+              </tr>
+              <tr>
+                <td><span data-lang="pt">Versionamento</span><span data-lang="en">Versioning</span></td>
+                <td>
+                  <span data-lang="pt">Separado do código</span>
+                  <span data-lang="en">Separate from code</span>
+                </td>
+                <td>
+                  <span data-lang="pt">Mesmo repo, revisado em PR</span>
+                  <span data-lang="en">Same repo, PR-reviewed</span>
+                </td>
+              </tr>
+              <tr>
+                <td><span data-lang="pt">Ambiguidade</span><span data-lang="en">Ambiguity</span></td>
+                <td>
+                  <span data-lang="pt">Ainda possível</span>
+                  <span data-lang="en">Still possible</span>
+                </td>
+                <td>
+                  <span data-lang="pt">Estruturado para minimizar</span>
+                  <span data-lang="en">Structured to minimize</span>
+                </td>
+              </tr>
+              <tr>
+                <td><span data-lang="pt">Ferramentas</span><span data-lang="en">Tooling</span></td>
+                <td>Cucumber, SpecFlow</td>
+                <td>OpenAPI, AsyncAPI, GitHub Spec Kit</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 8 — GitHub Spec Kit
+         ============================================================ -->
+    <section class="slide slide--tools" data-slide="8"
+             tabindex="-1" aria-label="Slide 8: GitHub Spec Kit">
+      <div class="slide__content">
+        <span class="slide__tag">
+          <span data-lang="pt">Ferramentas</span>
+          <span data-lang="en">Tooling</span>
+        </span>
+        <h2 class="slide__heading">GitHub Spec Kit</h2>
+        <div class="tool-grid">
+          <div class="tool-item">
+            <span class="tool-item__icon" aria-hidden="true">📁</span>
+            <span>
+              <span data-lang="pt">Cria <strong>specs estruturadas</strong></span>
+              <span data-lang="en">Creates <strong>structured specs</strong></span>
+            </span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-item__icon" aria-hidden="true">🔖</span>
+            <span>
+              <span data-lang="pt">Versiona specs <strong>junto com o código</strong></span>
+              <span data-lang="en">Versions specs <strong>with code</strong></span>
+            </span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-item__icon" aria-hidden="true">⚙️</span>
+            <span>
+              <span data-lang="pt">Gera <strong>testes e scaffolding</strong></span>
+              <span data-lang="en">Generates <strong>tests &amp; scaffolding</strong></span>
+            </span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-item__icon" aria-hidden="true">👁️</span>
+            <span>
+              <span data-lang="pt">Revise specs <strong>via PRs</strong></span>
+              <span data-lang="en">Review specs <strong>via PRs</strong></span>
+            </span>
+          </div>
+        </div>
+        <blockquote class="slide__quote slide__quote--teal">
+          <p>
+            <span data-lang="pt">"Se algo muda, a spec muda primeiro.<br>Todo mundo vê <strong>no PR</strong>."</span>
+            <span data-lang="en">"If something changes, the spec changes first.<br>Everyone sees it <strong>in the PR</strong>."</span>
+          </p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 9 — Demo Overview
+         ============================================================ -->
+    <section class="slide slide--demo" data-slide="9"
+             tabindex="-1" aria-label="Slide 9: Demo Overview">
+      <div class="slide__content">
+        <span class="slide__tag slide__tag--demo">
+          <span data-lang="pt">Demo Ao Vivo</span>
+          <span data-lang="en">Live Demo</span>
+        </span>
+        <h2 class="slide__heading">
+          <span data-lang="pt">Demo — Validação de Login</span>
+          <span data-lang="en">Demo — Login Validation</span>
+        </h2>
+        <div class="demo-wrap">
+          <div class="demo-stack">
+            <div class="demo-stack__item demo-stack__item--spec">
+              <span class="demo-stack__icon" aria-hidden="true">📋</span>
+              <span class="demo-stack__label">Spec</span>
+            </div>
+            <div class="demo-stack__arrow" aria-hidden="true">↓</div>
+            <div class="demo-stack__item demo-stack__item--tests">
+              <span class="demo-stack__icon" aria-hidden="true">🎭</span>
+              <span class="demo-stack__label">Playwright</span>
+            </div>
+            <div class="demo-stack__arrow" aria-hidden="true">↓</div>
+            <div class="demo-stack__item demo-stack__item--code">
+              <span class="demo-stack__icon" aria-hidden="true">💻</span>
+              <span class="demo-stack__label">
+                <span data-lang="pt">Código</span>
+                <span data-lang="en">Code</span>
+              </span>
+            </div>
+          </div>
+          <div class="demo-details">
+            <h3>
+              <span data-lang="pt">Abordagem QA-First</span>
+              <span data-lang="en">QA-First Approach</span>
+            </h3>
+            <ul>
+              <li>
+                <span data-lang="pt">Spec define critérios de aceite</span>
+                <span data-lang="en">Spec defines acceptance criteria</span>
+              </li>
+              <li>
+                <span data-lang="pt">Testes provam o contrato</span>
+                <span data-lang="en">Tests prove the contract</span>
+              </li>
+              <li>
+                <span data-lang="pt">Código satisfaz os testes</span>
+                <span data-lang="en">Code satisfies the tests</span>
+              </li>
+              <li>
+                <span data-lang="pt">Nada existe sem uma spec</span>
+                <span data-lang="en">Nothing exists without a spec</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 10 — The Specification
+         ============================================================ -->
+    <section class="slide slide--spec" data-slide="10"
+             tabindex="-1" aria-label="Slide 10: The Specification">
+      <div class="slide__content">
+        <h2 class="slide__heading">
+          <span data-lang="pt">A Especificação</span>
+          <span data-lang="en">The Specification</span>
+        </h2>
+        <div class="code-block" role="region" aria-label="Specification file example">
+          <div class="code-block__bar">
+            <span class="code-block__dot" aria-hidden="true"></span>
+            <span class="code-block__dot" aria-hidden="true"></span>
+            <span class="code-block__dot" aria-hidden="true"></span>
+            <span class="code-block__filename">login.spec.md</span>
+          </div>
+          <pre class="code-block__body"><code><span class="ck">&#35; Feature:</span> User Login Validation
+
+<span class="cs">&#35;&#35; Rules</span>
+- Email: <span class="cv">required, valid format (RFC 5322)</span>
+- Password: <span class="cv">required, min 8 chars</span>
+- Max attempts: <span class="cv">5 (then 15-min lockout)</span>
+- Session: <span class="cv">expires in 24h</span>
+
+<span class="cs">&#35;&#35; Edge Cases</span>
+- SQL injection attempts → <span class="ch">rejected</span>
+- Empty fields → <span class="ch">inline errors shown</span>
+- Remember Me → <span class="ch">30-day token</span>
+- Unicode passwords → <span class="ch">accepted</span></code></pre>
+        </div>
+        <blockquote class="slide__quote slide__quote--inline">
+          <p>
+            <span data-lang="pt">"Este é o <strong>contrato</strong>."</span>
+            <span data-lang="en">"This is the <strong>contract</strong>."</span>
+          </p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 11 — Tests from Spec
+         ============================================================ -->
+    <section class="slide slide--tests" data-slide="11"
+             tabindex="-1" aria-label="Slide 11: Tests from Spec">
+      <div class="slide__content">
+        <h2 class="slide__heading">
+          <span data-lang="pt">Testes a partir da Spec</span>
+          <span data-lang="en">Tests from Spec</span>
+        </h2>
+        <div class="code-block" role="region" aria-label="Playwright test example">
+          <div class="code-block__bar">
+            <span class="code-block__dot" aria-hidden="true"></span>
+            <span class="code-block__dot" aria-hidden="true"></span>
+            <span class="code-block__dot" aria-hidden="true"></span>
+            <span class="code-block__filename">login.spec.ts</span>
+          </div>
+          <pre class="code-block__body"><code><span class="ck">test</span>(<span class="cv">'rejects invalid email format'</span>, <span class="ck">async</span> () =&gt; {
+  <span class="cc">// Derived directly from spec rule: "valid format"</span>
+  await page.fill(<span class="cv">'[name=email]'</span>, <span class="cv">'notanemail'</span>);
+  await page.click(<span class="cv">'button[type=submit]'</span>);
+  await expect(page.locator(<span class="cv">'.error'</span>))
+    .toContainText(<span class="cv">'Valid email required'</span>);
+});
+
+<span class="ck">test</span>(<span class="cv">'locks out after 5 failed attempts'</span>, <span class="ck">async</span> () =&gt; {
+  <span class="cc">// Derived directly from spec rule: "max attempts: 5"</span>
+  <span class="ck">for</span> (let i = <span class="cs">0</span>; i &lt; <span class="cs">5</span>; i++) { ... }
+  await expect(lockoutMessage).toBeVisible();
+});</code></pre>
+        </div>
+        <blockquote class="slide__quote slide__quote--inline">
+          <p>
+            <span data-lang="pt">"QA não inventa. QA <strong>valida o que foi especificado</strong>."</span>
+            <span data-lang="en">"QA doesn't invent. QA <strong>validates what was specified</strong>."</span>
+          </p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 12 — AI: Accelerator
+         ============================================================ -->
+    <section class="slide slide--ai" data-slide="12"
+             tabindex="-1" aria-label="Slide 12: AI as Accelerator">
+      <div class="slide__content">
+        <span class="slide__tag slide__tag--ai">
+          <span data-lang="pt">IA &amp; Automação</span>
+          <span data-lang="en">AI &amp; Automation</span>
+        </span>
+        <h2 class="slide__heading">
+          <span data-lang="pt">IA — Acelerador, Não Substituto</span>
+          <span data-lang="en">AI — Accelerator, Not Replacement</span>
+        </h2>
+        <div class="ai-compare">
+          <div class="ai-card ai-card--bad">
+            <h3>
+              <span data-lang="pt">Sem Boas Specs</span>
+              <span data-lang="en">Without Good Specs</span>
+            </h3>
+            <p class="ai-card__emoji" aria-hidden="true">🌀</p>
+            <p>
+              <span data-lang="pt">IA alucina<br>Resultado imprevisível<br>Resultados não testáveis</span>
+              <span data-lang="en">AI hallucinates<br>Unpredictable output<br>Untestable results</span>
+            </p>
+          </div>
+          <div class="ai-vs" aria-label="versus">VS</div>
+          <div class="ai-card ai-card--good">
+            <h3>
+              <span data-lang="pt">Com Boas Specs</span>
+              <span data-lang="en">With Good Specs</span>
+            </h3>
+            <p class="ai-card__emoji" aria-hidden="true">⚡</p>
+            <p>
+              <span data-lang="pt">IA revisa specs<br>Encontra ambiguidades<br>Sugere edge cases</span>
+              <span data-lang="en">AI reviews specs<br>Finds ambiguities<br>Suggests edge cases</span>
+            </p>
+          </div>
+        </div>
+        <div class="ai-roles">
+          <span class="ai-role">
+            <span data-lang="pt">🔍 Revisa specs</span>
+            <span data-lang="en">🔍 Reviews specs</span>
+          </span>
+          <span class="ai-role">
+            <span data-lang="pt">🎯 Encontra ambiguidades</span>
+            <span data-lang="en">🎯 Finds ambiguities</span>
+          </span>
+          <span class="ai-role">
+            <span data-lang="pt">💡 Sugere edge cases</span>
+            <span data-lang="en">💡 Suggests edge cases</span>
+          </span>
+          <span class="ai-role">
+            <span data-lang="pt">✅ QA valida tudo</span>
+            <span data-lang="en">✅ QA validates all</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 13 — AI Reviewing Specs
+         ============================================================ -->
+    <section class="slide slide--ai-review" data-slide="13"
+             tabindex="-1" aria-label="Slide 13: AI Reviewing Specs Example">
+      <div class="slide__content">
+        <h2 class="slide__heading">
+          <span data-lang="pt">IA Revisando Specs — Exemplo</span>
+          <span data-lang="en">AI Reviewing Specs — Example</span>
+        </h2>
+        <div class="chat">
+          <div class="chat__msg chat__msg--user">
+            <span class="chat__avatar" aria-hidden="true">👤</span>
+            <div class="chat__bubble">
+              <strong>
+                <span data-lang="pt">Você:</span>
+                <span data-lang="en">You:</span>
+              </strong>
+              <span data-lang="pt"> "Revise esta spec de login e identifique ambiguidades..."</span>
+              <span data-lang="en"> "Review this login spec and identify ambiguities..."</span>
+            </div>
+          </div>
+          <div class="chat__msg chat__msg--ai">
+            <span class="chat__avatar" aria-hidden="true">🤖</span>
+            <div class="chat__bubble">
+              <strong>
+                <span data-lang="pt">IA:</span>
+                <span data-lang="en">AI:</span>
+              </strong>
+              <ul>
+                <li>
+                  🔴
+                  <span data-lang="pt"><em>"Formato válido"</em> — qual RFC? Inclua exemplo.</span>
+                  <span data-lang="en"><em>"Valid format"</em> — which RFC? Include example.</span>
+                </li>
+                <li>
+                  🟡
+                  <span data-lang="pt">Duração do lockout indefinida — especifique 15 min.</span>
+                  <span data-lang="en">Lockout duration undefined — specify 15 min.</span>
+                </li>
+                <li>
+                  🟢
+                  <span data-lang="pt">Edge case: senhas Unicode com caracteres especiais?</span>
+                  <span data-lang="en">Edge case: Unicode passwords with special chars?</span>
+                </li>
+                <li>
+                  🟢
+                  <span data-lang="pt">O que acontece com sessões ativas durante lockout?</span>
+                  <span data-lang="en">What happens to active sessions at lockout?</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 14 — AI + Real Browsers
+         ============================================================ -->
+    <section class="slide slide--browserstack" data-slide="14"
+             tabindex="-1" aria-label="Slide 14: AI + Real Browsers">
+      <div class="slide__content">
+        <span class="slide__tag slide__tag--ai">
+          <span data-lang="pt">IA + Testes</span>
+          <span data-lang="en">AI + Testing</span>
+        </span>
+        <h2 class="slide__heading">
+          <span data-lang="pt">IA + Navegadores Reais</span>
+          <span data-lang="en">AI + Real Browsers</span>
+        </h2>
+        <div class="pipeline">
+          <div class="pipeline__step pipeline__step--ai">
+            <div class="pipeline__icon" aria-hidden="true">🤖</div>
+            <h3>
+              <span data-lang="pt">IA</span>
+              <span data-lang="en">AI</span>
+            </h3>
+            <p>
+              <span data-lang="pt">Sugere cobertura a partir das specs</span>
+              <span data-lang="en">Suggests coverage ideas from specs</span>
+            </p>
+          </div>
+          <div class="pipeline__arrow" aria-hidden="true">→</div>
+          <div class="pipeline__step pipeline__step--tests">
+            <div class="pipeline__icon" aria-hidden="true">📋</div>
+            <h3>
+              <span data-lang="pt">Testes</span>
+              <span data-lang="en">Tests</span>
+            </h3>
+            <p>
+              <span data-lang="pt">Validam o contrato com precisão</span>
+              <span data-lang="en">Validate the contract precisely</span>
+            </p>
+          </div>
+          <div class="pipeline__arrow" aria-hidden="true">→</div>
+          <div class="pipeline__step pipeline__step--browser">
+            <div class="pipeline__icon" aria-hidden="true">🌐</div>
+            <h3>BrowserStack</h3>
+            <p>
+              <span data-lang="pt">Prova que funciona no mundo real</span>
+              <span data-lang="en">Proves it works in the real world</span>
+            </p>
+          </div>
+        </div>
+        <blockquote class="slide__quote">
+          <p>
+            <span data-lang="pt">"IA sugere. BrowserStack prova.<br>Seu <strong>cliente usa</strong>."</span>
+            <span data-lang="en">"AI suggests. BrowserStack proves.<br>Your <strong>customer uses</strong>."</span>
+          </p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 15 — What You GAIN
+         ============================================================ -->
+    <section class="slide slide--gains" data-slide="15"
+             tabindex="-1" aria-label="Slide 15: What You Gain">
+      <div class="slide__content">
+        <span class="slide__tag slide__tag--success">
+          <span data-lang="pt">Benefícios</span>
+          <span data-lang="en">Benefits</span>
+        </span>
+        <h2 class="slide__heading">
+          <span data-lang="pt">O Que Você GANHA</span>
+          <span data-lang="en">What You GAIN</span>
+        </h2>
+        <div class="gains-grid">
+          <div class="gains-card gains-card--qa">
+            <h3 class="gains-card__title">
+              <span aria-hidden="true">🧪</span>
+              <span data-lang="pt">Para QA</span>
+              <span data-lang="en">For QA</span>
+            </h3>
+            <ul>
+              <li>
+                <span data-lang="pt">Menos testes às cegas</span>
+                <span data-lang="en">Less blind testing</span>
+              </li>
+              <li>
+                <span data-lang="pt">Automação mais estável</span>
+                <span data-lang="en">More stable automation</span>
+              </li>
+              <li>
+                <span data-lang="pt">Participação desde o dia 1</span>
+                <span data-lang="en">Seat at the table from day 1</span>
+              </li>
+            </ul>
+          </div>
+          <div class="gains-card gains-card--dev">
+            <h3 class="gains-card__title">
+              <span aria-hidden="true">💻</span>
+              <span data-lang="pt">Para Dev</span>
+              <span data-lang="en">For Dev</span>
+            </h3>
+            <ul>
+              <li>
+                <span data-lang="pt">Menos retrabalho</span>
+                <span data-lang="en">Less rework</span>
+              </li>
+              <li>
+                <span data-lang="pt">Menos PRs rejeitados</span>
+                <span data-lang="en">Fewer rejected PRs</span>
+              </li>
+              <li>
+                <span data-lang="pt">Critérios de aceite claros</span>
+                <span data-lang="en">Clear acceptance criteria</span>
+              </li>
+            </ul>
+          </div>
+          <div class="gains-card gains-card--company">
+            <h3 class="gains-card__title">
+              <span aria-hidden="true">🏢</span>
+              <span data-lang="pt">Para Empresa</span>
+              <span data-lang="en">For Company</span>
+            </h3>
+            <ul>
+              <li>
+                <span data-lang="pt">Menos bugs caros</span>
+                <span data-lang="en">Fewer expensive bugs</span>
+              </li>
+              <li>
+                <span data-lang="pt">Releases previsíveis</span>
+                <span data-lang="en">Predictable releases</span>
+              </li>
+              <li>
+                <span data-lang="pt">Melhor ROI nos testes</span>
+                <span data-lang="en">Better ROI on testing</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 16 — How to Start
+         ============================================================ -->
+    <section class="slide slide--start" data-slide="16"
+             tabindex="-1" aria-label="Slide 16: How to Start">
+      <div class="slide__content">
+        <h2 class="slide__heading">
+          <span data-lang="pt">Como Começar — 3 Passos</span>
+          <span data-lang="en">How to Start — 3 Steps</span>
+        </h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step__num" aria-label="Passo 1">1</div>
+            <div class="step__body">
+              <h3>
+                <span data-lang="pt">Escolha UMA Funcionalidade Pequena</span>
+                <span data-lang="en">Choose ONE Small Feature</span>
+              </h3>
+              <p>
+                <span data-lang="pt">Não migre tudo de uma vez. Escolha uma funcionalidade nova e focada.</span>
+                <span data-lang="en">Don't migrate everything at once. Pick a focused, upcoming feature.</span>
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step__num" aria-label="Passo 2">2</div>
+            <div class="step__body">
+              <h3>
+                <span data-lang="pt">Escreva uma Spec Simples</span>
+                <span data-lang="en">Write a Simple Spec</span>
+              </h3>
+              <p>
+                <span data-lang="pt">Defina regras, casos extremos, critérios de aceite. Mantenha estruturado e curto.</span>
+                <span data-lang="en">Define rules, edge cases, acceptance criteria. Keep it structured and short.</span>
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step__num" aria-label="Passo 3">3</div>
+            <div class="step__body">
+              <h3>
+                <span data-lang="pt">Deixe a IA Ajudar — QA Valida</span>
+                <span data-lang="en">Let AI Help — QA Validates</span>
+              </h3>
+              <p>
+                <span data-lang="pt">Use a IA para encontrar lacunas. QA valida e é dona da spec final.</span>
+                <span data-lang="en">Use AI to find gaps. QA validates and owns the final spec.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <blockquote class="slide__quote slide__quote--center">
+          <p>
+            <span data-lang="pt">"Comece pequeno — mas comece <strong>CERTO</strong>."</span>
+            <span data-lang="en">"Start small — but start <strong>RIGHT</strong>."</span>
+          </p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 17 — Pitfalls
+         ============================================================ -->
+    <section class="slide slide--pitfalls" data-slide="17"
+             tabindex="-1" aria-label="Slide 17: Pitfalls">
+      <div class="slide__content">
+        <span class="slide__tag slide__tag--warn">
+          <span data-lang="pt">Atenção</span>
+          <span data-lang="en">Caution</span>
+        </span>
+        <h2 class="slide__heading">
+          <span data-lang="pt">Armadilhas — O Que NÃO Fazer</span>
+          <span data-lang="en">Pitfalls — What NOT To Do</span>
+        </h2>
+        <div class="pitfalls">
+          <div class="pitfall">
+            <span class="pitfall__icon" aria-hidden="true">🚫</span>
+            <div>
+              <strong>
+                <span data-lang="pt">Não migre tudo de uma vez</span>
+                <span data-lang="en">Don't migrate everything at once</span>
+              </strong>
+              <p>
+                <span data-lang="pt">Comece com uma feature. Construa o hábito gradualmente.</span>
+                <span data-lang="en">Start with one feature. Build the habit gradually.</span>
+              </p>
+            </div>
+          </div>
+          <div class="pitfall">
+            <span class="pitfall__icon" aria-hidden="true">🚫</span>
+            <div>
+              <strong>
+                <span data-lang="pt">Não transforme specs em burocracia</span>
+                <span data-lang="en">Don't turn specs into bureaucracy</span>
+              </strong>
+              <p>
+                <span data-lang="pt">Specs devem acelerar, não atrasar o time.</span>
+                <span data-lang="en">Specs should enable speed, not slow the team down.</span>
+              </p>
+            </div>
+          </div>
+          <div class="pitfall">
+            <span class="pitfall__icon" aria-hidden="true">🚫</span>
+            <div>
+              <strong>
+                <span data-lang="pt">Não confie 100% na IA sem validação humana</span>
+                <span data-lang="en">Don't trust AI 100% without human validation</span>
+              </strong>
+              <p>
+                <span data-lang="pt">IA sugere. Humanos decidem. QA é dono do resultado.</span>
+                <span data-lang="en">AI suggests. Humans decide. QA owns the outcome.</span>
+              </p>
+            </div>
+          </div>
+          <div class="pitfall">
+            <span class="pitfall__icon" aria-hidden="true">🚫</span>
+            <div>
+              <strong>
+                <span data-lang="pt">Lembre: BrowserStack testa NAVEGADORES, não specs</span>
+                <span data-lang="en">Don't forget: BrowserStack tests BROWSERS, not specs</span>
+              </strong>
+              <p>
+                <span data-lang="pt">Specs e testes cross-browser são complementares, não equivalentes.</span>
+                <span data-lang="en">Specs and cross-browser testing are complementary, not equivalent.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 18 — Final Message
+         ============================================================ -->
+    <section class="slide slide--final" data-slide="18"
+             tabindex="-1" aria-label="Slide 18: Final Message">
+      <div class="slide__content slide__content--center">
+        <h1 class="final__title">
+          <span data-lang="pt">Qualidade não é testada no final.</span>
+          <span data-lang="en">Quality is not tested at the end.</span>
+        </h1>
+        <h2 class="final__subtitle">
+          <span data-lang="pt">Ela é especificada no começo.</span>
+          <span data-lang="en">It is specified at the beginning.</span>
+        </h2>
+        <div class="formula">
+          <span class="formula__part">Spec-Driven</span>
+          <span class="formula__op" aria-hidden="true">+</span>
+          <span class="formula__part">QA-First</span>
+          <span class="formula__op" aria-hidden="true">+</span>
+          <span class="formula__part">
+            <span data-lang="pt">IA</span>
+            <span data-lang="en">AI</span>
+          </span>
+          <span class="formula__eq" aria-label="=">=</span>
+          <span class="formula__result">
+            <span data-lang="pt">Qualidade escalável desde o primeiro commit</span>
+            <span data-lang="en">Scalable quality from first commit</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 19 — Thank You
+         ============================================================ -->
+    <section class="slide slide--thankyou" data-slide="19"
+             tabindex="-1" aria-label="Slide 19: Thank You">
+      <div class="slide__content slide__content--center">
+        <h1 class="thanks__title">Obrigado!</h1>
+        <h2 class="thanks__subtitle">Thank You!</h2>
+        <div class="next-steps">
+          <h3 class="next-steps__heading">
+            <span data-lang="pt">Próximos Passos</span>
+            <span data-lang="en">Next Steps</span>
+          </h3>
+          <ul class="next-steps__list">
+            <li>
+              <span aria-hidden="true">🧪</span>
+              <span data-lang="pt">Teste em uma feature real esta semana</span>
+              <span data-lang="en">Test it on a real feature this week</span>
+            </li>
+            <li>
+              <span aria-hidden="true">📚</span>
+              <span data-lang="pt">Leia os docs: OpenAPI, GitHub Spec Kit</span>
+              <span data-lang="en">Read the docs: OpenAPI, GitHub Spec Kit</span>
+            </li>
+            <li>
+              <span aria-hidden="true">🤝</span>
+              <span data-lang="pt">Inclua QA desde o dia 1 — não no final</span>
+              <span data-lang="en">Involve QA from day 1 — not at the end</span>
+            </li>
+          </ul>
+        </div>
+        <p class="thanks__name">Demis Meneghetti · QA Engineer &amp; Tech Lead</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 20 — QR Code
+         ============================================================ -->
+    <section class="slide slide--qr" data-slide="20"
+             tabindex="-1" aria-label="Slide 20: Share QR Code">
+      <div class="slide__content slide__content--center">
+        <h2 class="qr__heading">
+          <span data-lang="pt">Compartilhe!</span>
+          <span data-lang="en">Share!</span>
+        </h2>
+        <p class="qr__sub">
+          <span data-lang="pt">Leia o QR Code ou acesse:</span>
+          <span data-lang="en">Scan the QR Code or visit:</span>
+        </p>
+        <div class="qr-box" id="qr-box">
+          <img
+            id="qr-img"
+            class="qr-img"
+            src=""
+            alt="QR Code linking to this presentation"
+            width="300"
+            height="300"
+          >
+          <div id="qr-offline" class="qr-offline" hidden>
+            <p>
+              <span data-lang="pt">QR Code indisponível offline.<br>Acesse a URL abaixo.</span>
+              <span data-lang="en">QR Code unavailable offline.<br>Please visit the URL below.</span>
+            </p>
+          </div>
+        </div>
+        <p class="qr-url" id="qr-url" aria-label="Presentation URL"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================================================================
+       NAVIGATION BAR
+       ================================================================ -->
+  <nav class="nav" role="navigation" aria-label="Slide navigation">
+    <div class="nav__inner">
+
+      <button class="nav__btn nav__btn--prev" id="btn-prev"
+              aria-label="Slide anterior" disabled>
+        <span aria-hidden="true">←</span>
+        <span class="nav__btn-label">
+          <span data-lang="pt">Ant.</span>
+          <span data-lang="en">Prev</span>
+        </span>
+      </button>
+
+      <div class="nav__center">
+        <div class="nav__counter" aria-live="polite" aria-atomic="true">
+          <span id="slide-current">1</span>
+          <span class="nav__sep" aria-hidden="true">/</span>
+          <span id="slide-total">20</span>
+        </div>
+        <div class="progress"
+             role="progressbar"
+             aria-label="Progresso da apresentação"
+             aria-valuemin="1"
+             aria-valuemax="20"
+             aria-valuenow="1">
+          <div class="progress__fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <button class="nav__btn nav__btn--next" id="btn-next"
+              aria-label="Próximo slide">
+        <span class="nav__btn-label">
+          <span data-lang="pt">Próx.</span>
+          <span data-lang="en">Next</span>
+        </span>
+        <span aria-hidden="true">→</span>
+      </button>
+
+      <button class="nav__lang" id="btn-lang" aria-label="Switch to English">
+        <!-- Shows the language you'll switch TO -->
+        <span data-lang="pt">🌐 EN</span>
+        <span data-lang="en">🌐 PT</span>
+      </button>
+
+    </div>
+  </nav>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

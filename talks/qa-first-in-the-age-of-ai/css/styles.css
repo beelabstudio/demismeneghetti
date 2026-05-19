@@ -1,0 +1,1118 @@
+/* ================================================================
+   Spec-Driven Development Presentation
+   css/styles.css
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   BILINGUAL SWITCHING
+   html[lang="pt"] hides [data-lang="en"] and vice-versa.
+   ---------------------------------------------------------------- */
+html[lang="pt"] [data-lang="en"] { display: none; }
+html[lang="en"] [data-lang="pt"] { display: none; }
+
+/* ----------------------------------------------------------------
+   1. CSS CUSTOM PROPERTIES
+   ---------------------------------------------------------------- */
+:root {
+  --navy:      #1E2761;
+  --teal:      #028090;
+  --coral:     #F96167;
+  --mint:      #02C39A;
+  --gold:      #F9E795;
+  --white:     #FFFFFF;
+  --darkgray:  #36454F;
+
+  /* Extended */
+  --navy-dark:   #141C4A;
+  --navy-light:  #2E3A8A;
+  --teal-light:  #03A3B5;
+  --mint-dark:   #01A07E;
+  --coral-dark:  #D94F54;
+  --gray-light:  #4A5F6E;
+
+  /* Typography */
+  --font-ui:   'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+
+  /* Spacing */
+  --pad:       clamp(1.5rem, 4vw, 3rem);
+  --nav-h:     64px;
+
+  /* Transitions */
+  --t-fast:    0.2s ease;
+  --t-slide:   0.45s ease;
+}
+
+/* ----------------------------------------------------------------
+   2. RESET & BASE
+   ---------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--navy-dark);
+  color: var(--white);
+  overflow: hidden;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ----------------------------------------------------------------
+   3. PRESENTATION CONTAINER
+   ---------------------------------------------------------------- */
+#presentation {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ----------------------------------------------------------------
+   4. SLIDES — base state
+   ---------------------------------------------------------------- */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--pad) var(--pad) calc(var(--pad) + var(--nav-h));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-slide);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 2;
+}
+
+/* Content wrapper — animated on slide activation */
+.slide__content {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.5vh, 1.8rem);
+}
+
+.slide.active .slide__content {
+  animation: fadeUp 0.55s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.slide__content--center {
+  align-items: center;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------------
+   5. SLIDE THEMES
+   ---------------------------------------------------------------- */
+.slide--title       { background: linear-gradient(140deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%); }
+.slide--problem     { background: linear-gradient(140deg, var(--darkgray) 0%, var(--gray-light) 100%); }
+.slide--bdd         { background: linear-gradient(140deg, var(--teal) 0%, var(--teal-light) 100%); }
+.slide--bdd-break   { background: linear-gradient(140deg, var(--coral-dark) 0%, var(--coral) 100%); }
+.slide--sdd         { background: linear-gradient(140deg, var(--mint-dark) 0%, var(--teal) 100%); }
+.slide--comparison  { background: linear-gradient(140deg, var(--navy) 0%, var(--teal) 100%); }
+.slide--table       { background: linear-gradient(140deg, var(--darkgray) 0%, #2C3E50 100%); }
+.slide--tools       { background: linear-gradient(140deg, var(--teal) 0%, var(--navy) 100%); }
+.slide--demo        { background: linear-gradient(140deg, #1A3040 0%, var(--darkgray) 100%); }
+.slide--spec        { background: linear-gradient(140deg, var(--navy-dark) 0%, #1A3A4A 100%); }
+.slide--tests       { background: linear-gradient(140deg, #1A3A4A 0%, var(--navy) 100%); }
+.slide--ai          { background: linear-gradient(140deg, var(--mint-dark) 0%, var(--teal) 100%); }
+.slide--ai-review   { background: linear-gradient(140deg, var(--navy) 0%, var(--mint-dark) 100%); }
+.slide--browserstack{ background: linear-gradient(140deg, var(--teal) 0%, var(--mint-dark) 100%); }
+.slide--gains       { background: linear-gradient(140deg, var(--navy) 0%, var(--teal) 100%); }
+.slide--start       { background: linear-gradient(140deg, var(--mint-dark) 0%, var(--teal) 100%); }
+.slide--pitfalls    { background: linear-gradient(140deg, var(--coral-dark) 0%, var(--darkgray) 100%); }
+.slide--final       { background: linear-gradient(140deg, var(--navy-dark) 0%, var(--navy) 100%); }
+.slide--thankyou    { background: linear-gradient(140deg, var(--navy) 0%, var(--navy-light) 100%); }
+.slide--qr          { background: linear-gradient(140deg, var(--navy-dark) 0%, var(--navy) 100%); }
+
+/* ----------------------------------------------------------------
+   6. REUSABLE TYPE ATOMS
+   ---------------------------------------------------------------- */
+.slide__heading {
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--white);
+}
+
+.slide__badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  width: fit-content;
+  backdrop-filter: blur(4px);
+}
+
+.slide__tag {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border-radius: 1.5rem;
+  background: rgba(255,255,255,0.18);
+  color: var(--white);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+.slide__tag--warn    { background: rgba(249,97,103,0.3); color: #ffdcdd; }
+.slide__tag--success { background: rgba(2,195,154,0.3);  color: #b0fff0; }
+.slide__tag--demo    { background: rgba(249,231,149,0.3); color: var(--gold); }
+.slide__tag--ai      { background: rgba(2,195,154,0.22); color: #c0ffef; }
+
+.slide__quote {
+  padding: 1.1rem 1.4rem;
+  background: rgba(0,0,0,0.25);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.55;
+}
+.slide__quote strong { color: var(--gold); }
+.slide__quote--teal  { border-color: var(--mint); }
+.slide__quote--teal strong { color: var(--mint); }
+.slide__quote--inline { border-color: var(--gold); font-size: 1.05rem; padding: 0.9rem 1.3rem; }
+.slide__quote--center {
+  border: 2px solid var(--gold);
+  border-radius: 0.5rem;
+  border-left-width: 2px;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------------
+   7. SLIDE 1 — Title
+   ---------------------------------------------------------------- */
+.title-h1 {
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.title-h2 {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 400;
+  color: var(--gold);
+  margin-top: 0.25rem;
+}
+
+.speaker-block {
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255,255,255,0.18);
+  margin-top: 0.5rem;
+}
+.speaker-block__name { font-size: 1.25rem; font-weight: 600; }
+.speaker-block__role { font-size: 0.95rem; color: rgba(255,255,255,0.65); margin-top: 0.2rem; }
+
+/* Decorative circles */
+.slide__decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.slide__content { position: relative; z-index: 1; }
+
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+}
+.deco-circle--1 { width: 480px; height: 480px; background: var(--teal);  right: -140px; top: -140px; }
+.deco-circle--2 { width: 260px; height: 260px; background: var(--mint);  right: 220px;  bottom: -60px; }
+.deco-circle--3 { width: 160px; height: 160px; background: var(--gold);  right: 60px;   top: 45%; }
+
+/* ----------------------------------------------------------------
+   8. SLIDE 2 — Problem List
+   ---------------------------------------------------------------- */
+.problem-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.problem-list__item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  padding: 0.85rem 1.2rem;
+  background: rgba(255,255,255,0.1);
+  border-left: 4px solid var(--coral);
+  border-radius: 0 0.5rem 0.5rem 0;
+  backdrop-filter: blur(4px);
+}
+.problem-list__icon { font-size: 1.4rem; flex-shrink: 0; }
+
+/* ----------------------------------------------------------------
+   9. SLIDE 3 — BDD two-col + code preview
+   ---------------------------------------------------------------- */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.info-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.info-card--accent {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.35);
+}
+.info-card__heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.info-card__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+}
+.info-card__list li::before { content: '→ '; color: var(--gold); font-weight: 700; }
+
+.code-preview {
+  background: rgba(0,0,0,0.38);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.code-preview pre {
+  padding: 1.1rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.8rem, 1.5vw, 0.92rem);
+  line-height: 1.65;
+  color: #dde;
+  overflow-x: auto;
+}
+
+/* ----------------------------------------------------------------
+   10. SLIDE 4 — Problem Grid
+   ---------------------------------------------------------------- */
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+.problem-card {
+  background: rgba(0,0,0,0.2);
+  border-radius: 0.75rem;
+  padding: 1rem 1.1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.13);
+  font-size: 0.97rem;
+  line-height: 1.45;
+}
+.problem-card--wide { grid-column: 1 / -1; }
+.problem-card__icon { font-size: 1.7rem; flex-shrink: 0; }
+.problem-card strong { color: var(--gold); }
+
+/* ----------------------------------------------------------------
+   11. SLIDE 5 — Evolution Grid
+   ---------------------------------------------------------------- */
+.evolution-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+.evolution-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 1.2rem;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: transform var(--t-fast);
+}
+.evolution-card:hover { transform: translateY(-3px); }
+.evolution-card__icon { font-size: 2rem; margin-bottom: 0.45rem; }
+.evolution-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--gold); margin-bottom: 0.35rem; }
+.evolution-card p { font-size: 0.85rem; opacity: 0.88; line-height: 1.45; }
+.evolution-card strong { color: var(--gold); }
+
+.badge-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.badge {
+  padding: 0.35rem 0.9rem;
+  border-radius: 2rem;
+  border: 2px solid rgba(255,255,255,0.45);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* ----------------------------------------------------------------
+   12. SLIDE 6 — Flow Comparison
+   ---------------------------------------------------------------- */
+.flow-wrap { display: flex; flex-direction: column; gap: 0.8rem; }
+.flow {
+  background: rgba(0,0,0,0.2);
+  border-radius: 0.75rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.13);
+}
+.flow__label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.65rem;
+}
+.flow--bad  .flow__label { color: var(--coral); }
+.flow--good .flow__label { color: var(--mint); }
+.flow__steps { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
+.flow__step {
+  background: rgba(255,255,255,0.14);
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.flow__step--bad  { background: rgba(249,97,103,0.28); color: #ffd8d9; font-weight: 700; }
+.flow__step--good { background: rgba(2,195,154,0.28);  color: #c0fff0; font-weight: 700; }
+.flow__arrow { font-size: 1.1rem; opacity: 0.55; }
+
+.why-box {
+  background: rgba(255,255,255,0.07);
+  border-radius: 0.75rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.why-box__heading {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  margin-bottom: 0.65rem;
+}
+.why-box__pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.pill {
+  background: rgba(255,255,255,0.13);
+  padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+/* ----------------------------------------------------------------
+   13. SLIDE 7 — Comparison Table
+   ---------------------------------------------------------------- */
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+}
+.cmp-table th,
+.cmp-table td {
+  padding: 0.85rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.09);
+}
+.cmp-table thead tr { background: rgba(255,255,255,0.14); }
+.cmp-table th {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+.cmp-table th:first-child { color: rgba(255,255,255,0.65); }
+.cmp-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.04); }
+.cmp-table tbody tr:last-child td { border-bottom: none; }
+.cmp-table td:nth-child(2) { color: rgba(255,255,255,0.75); }
+.cmp-table td:nth-child(3) { color: var(--mint); font-weight: 500; }
+
+/* ----------------------------------------------------------------
+   14. SLIDE 8 — Tool Grid
+   ---------------------------------------------------------------- */
+.tool-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+.tool-item {
+  background: rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 1.1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 0.97rem;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.tool-item__icon { font-size: 1.9rem; flex-shrink: 0; }
+.tool-item strong { color: var(--gold); }
+
+/* ----------------------------------------------------------------
+   15. SLIDE 9 — Demo Stack
+   ---------------------------------------------------------------- */
+.demo-wrap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.demo-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 150px;
+}
+.demo-stack__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.3rem;
+  width: 100%;
+  text-align: center;
+  border: 2px solid transparent;
+}
+.demo-stack__item--spec   { border-color: var(--gold); }
+.demo-stack__item--tests  { border-color: var(--teal); }
+.demo-stack__item--code   { border-color: var(--mint); }
+.demo-stack__icon  { font-size: 1.8rem; }
+.demo-stack__label { font-size: 0.88rem; font-weight: 700; }
+.demo-stack__arrow { font-size: 1.3rem; opacity: 0.55; }
+
+.demo-details {
+  background: rgba(255,255,255,0.07);
+  border-radius: 0.75rem;
+  padding: 1.3rem 1.4rem;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.demo-details h3 {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.65;
+  margin-bottom: 0.9rem;
+}
+.demo-details ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.demo-details li { padding-left: 1.4rem; position: relative; font-size: 0.97rem; }
+.demo-details li::before { content: '▸'; position: absolute; left: 0; color: var(--mint); }
+
+/* ----------------------------------------------------------------
+   16. CODE BLOCKS (slides 10 & 11)
+   ---------------------------------------------------------------- */
+.code-block {
+  background: #12151f;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.code-block__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1rem;
+  background: rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.code-block__dot {
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.code-block__dot:nth-child(1) { background: #ff5f57; }
+.code-block__dot:nth-child(2) { background: #ffbd2e; }
+.code-block__dot:nth-child(3) { background: #28c940; }
+.code-block__filename {
+  margin-left: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+}
+.code-block__body {
+  padding: 1.1rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.78rem, 1.4vw, 0.9rem);
+  line-height: 1.7;
+  color: #cdd;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Syntax tokens */
+.ck { color: #79b8ff; }   /* keyword / feature */
+.cv { color: #85e89d; }   /* value / string */
+.cs { color: #b392f0; }   /* section */
+.ch { color: var(--gold); font-weight: 600; } /* highlight */
+.cc { color: #6a737d; font-style: italic; }   /* comment */
+
+/* ----------------------------------------------------------------
+   17. SLIDE 12 — AI Compare
+   ---------------------------------------------------------------- */
+.ai-compare {
+  display: flex;
+  align-items: stretch;
+  gap: 1.2rem;
+}
+.ai-card {
+  flex: 1;
+  background: rgba(0,0,0,0.22);
+  border-radius: 0.75rem;
+  padding: 1.4rem;
+  text-align: center;
+  border: 2px solid transparent;
+}
+.ai-card--bad  { border-color: rgba(249,97,103,0.4); }
+.ai-card--good { border-color: rgba(2,195,154,0.4); }
+.ai-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.ai-card--bad  h3 { color: var(--coral); }
+.ai-card--good h3 { color: var(--mint); }
+.ai-card__emoji { font-size: 2.4rem; margin: 0.4rem 0; }
+.ai-card p { font-size: 0.9rem; line-height: 1.7; opacity: 0.9; }
+.ai-vs {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--gold);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.ai-roles { display: flex; flex-wrap: wrap; gap: 0.65rem; justify-content: center; }
+.ai-role {
+  background: rgba(255,255,255,0.1);
+  padding: 0.45rem 0.95rem;
+  border-radius: 2rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+/* ----------------------------------------------------------------
+   18. SLIDE 13 — Chat Demo
+   ---------------------------------------------------------------- */
+.chat { display: flex; flex-direction: column; gap: 0.85rem; }
+.chat__msg {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+}
+.chat__avatar {
+  font-size: 1.7rem;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat__bubble {
+  background: rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  border: 1px solid rgba(255,255,255,0.14);
+  flex: 1;
+}
+.chat__msg--user .chat__bubble {
+  background: rgba(2,128,144,0.22);
+  border-color: rgba(2,128,144,0.35);
+}
+.chat__bubble ul { list-style: none; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.chat__bubble li { font-size: 0.88rem; }
+
+/* ----------------------------------------------------------------
+   19. SLIDE 14 — Pipeline
+   ---------------------------------------------------------------- */
+.pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+.pipeline__step {
+  background: rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 1.3rem 1rem;
+  text-align: center;
+  flex: 1;
+  min-width: 150px;
+  border: 2px solid transparent;
+}
+.pipeline__step--ai      { border-color: var(--mint); }
+.pipeline__step--tests   { border-color: var(--gold); }
+.pipeline__step--browser { border-color: var(--teal); }
+.pipeline__icon { font-size: 2.2rem; margin-bottom: 0.45rem; }
+.pipeline__step h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem; }
+.pipeline__step p  { font-size: 0.82rem; opacity: 0.85; line-height: 1.4; }
+.pipeline__arrow { font-size: 1.4rem; opacity: 0.5; flex-shrink: 0; }
+
+/* ----------------------------------------------------------------
+   20. SLIDE 15 — Gains Grid
+   ---------------------------------------------------------------- */
+.gains-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+.gains-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 1.3rem 1.1rem;
+  border-top: 4px solid transparent;
+}
+.gains-card--qa      { border-color: var(--mint); }
+.gains-card--dev     { border-color: var(--gold); }
+.gains-card--company { border-color: var(--coral); }
+.gains-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.gains-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+.gains-card li {
+  font-size: 0.88rem;
+  padding-left: 1.2rem;
+  position: relative;
+  opacity: 0.9;
+}
+.gains-card li::before { content: '✓'; position: absolute; left: 0; color: var(--mint); font-weight: 700; }
+
+/* ----------------------------------------------------------------
+   21. SLIDE 16 — Steps
+   ---------------------------------------------------------------- */
+.steps { display: flex; flex-direction: column; gap: 0.85rem; }
+.step {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.08);
+  border-radius: 0.75rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.step__num {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--navy-dark);
+  font-size: 1.4rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.step__body h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.25rem; }
+.step__body p  { font-size: 0.88rem; opacity: 0.85; line-height: 1.45; }
+
+/* ----------------------------------------------------------------
+   22. SLIDE 17 — Pitfalls
+   ---------------------------------------------------------------- */
+.pitfalls { display: flex; flex-direction: column; gap: 0.85rem; }
+.pitfall {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  background: rgba(0,0,0,0.2);
+  border-radius: 0.75rem;
+  padding: 0.95rem 1.1rem;
+  border-left: 4px solid var(--coral);
+}
+.pitfall__icon { font-size: 1.4rem; flex-shrink: 0; }
+.pitfall strong { display: block; font-size: 0.97rem; margin-bottom: 0.2rem; }
+.pitfall p { font-size: 0.84rem; opacity: 0.8; line-height: 1.4; }
+
+/* ----------------------------------------------------------------
+   23. SLIDE 18 — Final Message
+   ---------------------------------------------------------------- */
+.final__title {
+  font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.1;
+  max-width: 680px;
+}
+.final__subtitle {
+  font-size: clamp(1.2rem, 3vw, 1.9rem);
+  font-weight: 400;
+  color: rgba(255,255,255,0.9);
+}
+.formula {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  background: rgba(255,255,255,0.07);
+  border-radius: 0.75rem;
+  padding: 1.1rem 1.8rem;
+  border: 1px solid rgba(255,255,255,0.13);
+}
+.formula__part {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--teal-light);
+  background: rgba(2,128,144,0.2);
+  padding: 0.3rem 0.75rem;
+  border-radius: 0.35rem;
+}
+.formula__op  { font-size: 1.3rem; font-weight: 700; color: var(--gold); }
+.formula__eq  { font-size: 1.4rem; font-weight: 700; color: var(--gold); }
+.formula__result { font-size: 0.97rem; font-weight: 600; color: var(--mint); }
+
+/* ----------------------------------------------------------------
+   24. SLIDE 19 — Thank You
+   ---------------------------------------------------------------- */
+.thanks__title {
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  font-weight: 900;
+  color: var(--mint);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.thanks__subtitle {
+  font-size: clamp(1.4rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--gold);
+}
+.next-steps {
+  background: rgba(255,255,255,0.08);
+  border-radius: 0.75rem;
+  padding: 1.3rem 1.8rem;
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid rgba(255,255,255,0.13);
+}
+.next-steps__heading {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.65;
+  margin-bottom: 0.9rem;
+}
+.next-steps__list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; text-align: left; }
+.next-steps__list li { display: flex; align-items: center; gap: 0.7rem; font-size: 0.94rem; }
+.thanks__name { font-size: 0.9rem; opacity: 0.6; margin-top: 0.4rem; }
+
+/* ----------------------------------------------------------------
+   25. SLIDE 20 — QR Code
+   ---------------------------------------------------------------- */
+.qr__heading {
+  font-size: clamp(2rem, 5.5vw, 3.8rem);
+  font-weight: 800;
+  color: var(--white);
+}
+.qr__sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.75);
+  margin-top: -0.5rem;
+}
+.qr-box {
+  background: var(--white);
+  border-radius: 1rem;
+  padding: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+  min-height: 320px;
+}
+.qr-img { width: 300px; height: 300px; display: block; }
+.qr-offline {
+  color: var(--darkgray);
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 2rem;
+  line-height: 1.6;
+}
+.qr-url {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--gold);
+  word-break: break-all;
+  max-width: 500px;
+  background: rgba(255,255,255,0.08);
+  padding: 0.65rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* ----------------------------------------------------------------
+   26. NAVIGATION BAR
+   ---------------------------------------------------------------- */
+.nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(16, 20, 55, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255,255,255,0.09);
+  z-index: 100;
+}
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 1.4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.nav__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  transition: background var(--t-fast), transform var(--t-fast), opacity var(--t-fast);
+  min-width: 88px;
+  user-select: none;
+}
+.nav__btn:hover:not(:disabled) { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+.nav__btn:active:not(:disabled) { transform: translateY(0); }
+.nav__btn:disabled { opacity: 0.28; cursor: not-allowed; }
+.nav__btn--next { justify-content: flex-end; }
+.nav__btn--prev { justify-content: flex-start; }
+
+.nav__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1;
+  max-width: 380px;
+  margin: 0 0.75rem;
+}
+.nav__counter {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.nav__sep { opacity: 0.45; }
+#slide-current { color: var(--gold); font-size: 1.05rem; font-weight: 700; }
+
+.progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.13);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--mint));
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 5%;
+}
+
+/* Language toggle button */
+.nav__lang {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(249,231,149,0.12);
+  color: var(--gold);
+  border: 1px solid rgba(249,231,149,0.35);
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  transition: background var(--t-fast), transform var(--t-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.03em;
+}
+.nav__lang:hover {
+  background: rgba(249,231,149,0.22);
+  transform: translateY(-1px);
+}
+.nav__lang:active { transform: translateY(0); }
+
+/* ----------------------------------------------------------------
+   27. RESPONSIVE — Tablet (≤ 900px)
+   ---------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .two-col,
+  .evolution-grid,
+  .tool-grid,
+  .gains-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .problem-grid { grid-template-columns: 1fr; }
+  .problem-card--wide { grid-column: 1; }
+
+  .ai-compare { flex-direction: column; }
+  .ai-vs { align-self: center; }
+
+  .pipeline { flex-wrap: wrap; }
+  .pipeline__arrow { display: none; }
+
+  .demo-wrap { grid-template-columns: 1fr; }
+  .demo-stack {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .demo-stack__item { min-width: 110px; }
+  .demo-stack__arrow { transform: rotate(-90deg); }
+}
+
+/* ----------------------------------------------------------------
+   28. RESPONSIVE — Mobile (≤ 640px)
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  :root { --nav-h: 68px; }
+
+  .slide {
+    align-items: flex-start;
+    padding-top: 1.5rem;
+  }
+
+  .slide__content { gap: 0.9rem; }
+
+  .title-h1 { font-size: clamp(2rem, 10vw, 3.2rem); }
+
+  .two-col,
+  .evolution-grid,
+  .tool-grid,
+  .gains-grid { grid-template-columns: 1fr; }
+
+  .problem-grid { grid-template-columns: 1fr; }
+  .problem-card--wide { grid-column: 1; }
+
+  .flow__steps { flex-wrap: wrap; }
+
+  .ai-compare { flex-direction: column; }
+
+  .cmp-table th,
+  .cmp-table td { padding: 0.6rem 0.75rem; font-size: 0.78rem; }
+
+  .chat__msg { flex-direction: column; }
+  .chat__avatar { display: none; }
+
+  .qr-box { min-width: 270px; min-height: 270px; }
+  .qr-img { width: 250px; height: 250px; }
+
+  .nav__btn-label { display: none; }
+  .nav__btn { min-width: 46px; padding: 0.5rem; justify-content: center; }
+
+  .demo-wrap { grid-template-columns: 1fr; }
+  .demo-stack { flex-direction: row; justify-content: center; flex-wrap: wrap; }
+  .demo-stack__arrow { transform: rotate(-90deg); }
+}
+
+/* ----------------------------------------------------------------
+   29. VERY SMALL (≤ 400px)
+   ---------------------------------------------------------------- */
+@media (max-width: 400px) {
+  :root { --pad: 1rem; }
+  .slide__heading { font-size: 1.4rem; }
+}
+
+/* ----------------------------------------------------------------
+   30. ACCESSIBILITY
+   ---------------------------------------------------------------- */
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip link (hidden by default) */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--gold);
+  color: var(--navy-dark);
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  z-index: 9999;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slide__content,
+  .progress__fill,
+  .evolution-card,
+  .nav__btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ----------------------------------------------------------------
+   31. PRINT
+   ---------------------------------------------------------------- */
+@media print {
+  .nav { display: none; }
+  body { overflow: visible; height: auto; }
+  #presentation { overflow: visible; height: auto; }
+  .slide {
+    position: relative;
+    opacity: 1;
+    pointer-events: all;
+    page-break-after: always;
+    height: 100vh;
+    padding-bottom: 2rem;
+  }
+}
