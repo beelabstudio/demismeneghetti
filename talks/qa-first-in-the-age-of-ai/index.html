@@ -685,49 +685,88 @@
           <span data-lang="pt">IA Revisando Specs — Exemplo</span>
           <span data-lang="en">AI Reviewing Specs — Example</span>
         </h2>
-        <div class="chat">
-          <div class="chat__msg chat__msg--user">
-            <span class="chat__avatar" aria-hidden="true">👤</span>
-            <div class="chat__bubble">
-              <strong>
-                <span data-lang="pt">Você:</span>
-                <span data-lang="en">You:</span>
-              </strong>
-              <span data-lang="pt"> "Revise esta spec de login e identifique ambiguidades..."</span>
-              <span data-lang="en"> "Review this login spec and identify ambiguities..."</span>
+        <div class="ai-review-wrap">
+          <div class="chat">
+            <div class="chat__msg chat__msg--user">
+              <span class="chat__avatar" aria-hidden="true">👤</span>
+              <div class="chat__bubble">
+                <strong>
+                  <span data-lang="pt">Você:</span>
+                  <span data-lang="en">You:</span>
+                </strong>
+                <span data-lang="pt"> "Revise esta spec de login e identifique ambiguidades..."</span>
+                <span data-lang="en"> "Review this login spec and identify ambiguities..."</span>
+              </div>
+            </div>
+            <div class="chat__msg chat__msg--ai">
+              <span class="chat__avatar" aria-hidden="true">🤖</span>
+              <div class="chat__bubble">
+                <strong>
+                  <span data-lang="pt">IA:</span>
+                  <span data-lang="en">AI:</span>
+                </strong>
+                <ul>
+                  <li>
+                    🔴
+                    <span data-lang="pt"><em>"Formato válido"</em> — qual RFC? Inclua exemplo.</span>
+                    <span data-lang="en"><em>"Valid format"</em> — which RFC? Include example.</span>
+                  </li>
+                  <li>
+                    🟡
+                    <span data-lang="pt">Duração do lockout indefinida — especifique 15 min.</span>
+                    <span data-lang="en">Lockout duration undefined — specify 15 min.</span>
+                  </li>
+                  <li>
+                    🟢
+                    <span data-lang="pt">Edge case: senhas Unicode com caracteres especiais?</span>
+                    <span data-lang="en">Edge case: Unicode passwords with special chars?</span>
+                  </li>
+                  <li>
+                    🟢
+                    <span data-lang="pt">O que acontece com sessões ativas durante lockout?</span>
+                    <span data-lang="en">What happens to active sessions at lockout?</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div class="chat__msg chat__msg--ai">
-            <span class="chat__avatar" aria-hidden="true">🤖</span>
-            <div class="chat__bubble">
-              <strong>
-                <span data-lang="pt">IA:</span>
-                <span data-lang="en">AI:</span>
-              </strong>
-              <ul>
-                <li>
-                  🔴
-                  <span data-lang="pt"><em>"Formato válido"</em> — qual RFC? Inclua exemplo.</span>
-                  <span data-lang="en"><em>"Valid format"</em> — which RFC? Include example.</span>
-                </li>
-                <li>
-                  🟡
-                  <span data-lang="pt">Duração do lockout indefinida — especifique 15 min.</span>
-                  <span data-lang="en">Lockout duration undefined — specify 15 min.</span>
-                </li>
-                <li>
-                  🟢
-                  <span data-lang="pt">Edge case: senhas Unicode com caracteres especiais?</span>
-                  <span data-lang="en">Edge case: Unicode passwords with special chars?</span>
-                </li>
-                <li>
-                  🟢
-                  <span data-lang="pt">O que acontece com sessões ativas durante lockout?</span>
-                  <span data-lang="en">What happens to active sessions at lockout?</span>
-                </li>
-              </ul>
-            </div>
-          </div>
+
+          <aside class="review-notes" aria-label="Explicação dos pontos levantados">
+            <h3 class="review-notes__heading">
+              <span data-lang="pt">Por que isso importa?</span>
+              <span data-lang="en">Why does it matter?</span>
+            </h3>
+            <ul class="review-notes__list">
+              <li class="review-notes__item review-notes__item--red">
+                <span class="review-notes__dot" aria-hidden="true">🔴</span>
+                <div>
+                  <span data-lang="pt">RFC 5322 aceita formatos que nenhum sistema real usa. Sem exemplo concreto, dev e QA validam coisas diferentes.</span>
+                  <span data-lang="en">RFC 5322 allows formats no real system accepts. Without a concrete example, dev and QA validate different things.</span>
+                </div>
+              </li>
+              <li class="review-notes__item review-notes__item--yellow">
+                <span class="review-notes__dot" aria-hidden="true">🟡</span>
+                <div>
+                  <span data-lang="pt">15 min estava entre parênteses, não como regra. O desbloqueio é automático? Reinicia a contagem a cada tentativa?</span>
+                  <span data-lang="en">15 min was in parentheses, not a rule. Is the unlock automatic? Does each attempt reset the counter?</span>
+                </div>
+              </li>
+              <li class="review-notes__item review-notes__item--green">
+                <span class="review-notes__dot" aria-hidden="true">🟢</span>
+                <div>
+                  <span data-lang="pt">"Aceito" é vago — aceito até qual comprimento? Emojis e caracteres como 𝕳𝖊𝖑𝖑𝖔 são tratados igual?</span>
+                  <span data-lang="en">"Accepted" is vague — up to what length? Are emojis and chars like 𝕳𝖊𝖑𝖑𝖔 handled the same?</span>
+                </div>
+              </li>
+              <li class="review-notes__item review-notes__item--green">
+                <span class="review-notes__dot" aria-hidden="true">🟢</span>
+                <div>
+                  <span data-lang="pt">A spec cobria novas tentativas, mas não sessões já abertas. Elas continuam? São invalidadas?</span>
+                  <span data-lang="en">The spec covered new attempts, not existing sessions. Do they persist? Are they invalidated?</span>
+                </div>
+              </li>
+            </ul>
+          </aside>
         </div>
       </div>
     </section>
