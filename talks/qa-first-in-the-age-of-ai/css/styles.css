@@ -834,7 +834,9 @@ body {
   margin-bottom: 0.9rem;
 }
 .next-steps__list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; text-align: left; }
-.next-steps__list li { display: flex; align-items: center; gap: 0.7rem; font-size: 0.94rem; }
+.next-steps__list li { display: flex; align-items: center; gap: 0.7rem; font-size: 0.94rem; flex-wrap: wrap; }
+.next-steps__link { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+.next-steps__link:hover { opacity: 0.8; }
 .thanks__name { font-size: 0.9rem; opacity: 0.6; margin-top: 0.4rem; }
 
 /* ----------------------------------------------------------------
