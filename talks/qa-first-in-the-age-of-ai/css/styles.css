@@ -936,7 +936,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;
-  max-width: 380px;
+  width: 100%;
   margin: 0 auto;
 }
 .nav__counter {
