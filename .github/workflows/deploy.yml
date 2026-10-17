@@ -91,6 +91,9 @@ jobs:
             **/.git*/**
             **/node_modules/**
             **/.github/**
+            **/.claude/**
+            **/AGENTS.md
+            **/CLAUDE.md
             **/README.md
             **/.DS_Store
             **/*.log
