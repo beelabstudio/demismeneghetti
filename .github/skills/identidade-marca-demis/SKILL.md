@@ -5,8 +5,9 @@ description: Visual identity and voice for Demis Meneghetti's personal brand (@d
 
 # Demis Meneghetti: Brand Identity
 
-> **Status:** v1.1 draft, 2026-10-16 (v1.1: amber family + companion
-> colours, per Demis). Visual system is fully specified and
+> **Status:** v1.2 draft, 2026-10-17 (v1.1: amber family + companion
+> colours, per Demis; v1.2: the amber family moved to the Bee Group brand
+> system, focus ring is Ink on light). Visual system is fully specified and
 > ready to use. Items marked **OPEN** need Demis's decision (see
 > [Open decisions](#open-decisions)). Built with
 > `~/repos/ai/skills/design/brand-designer`; taste rules from
@@ -29,16 +30,19 @@ description: Visual identity and voice for Demis Meneghetti's personal brand (@d
 
 ### Brand architecture: the root of the Bee family
 
-**Grupo Bee** is Demis's informal umbrella for the brands he created: Bee
-Lab Studio, Bee Lab Academy, Bee Creator Studio, BeeVideoEditor. Until
-now it existed only in his head; this section is its first written
-record. In his words: *"Eu sou Bee."* The personal brand is the person at
-the centre of that family. It carries the family colour without copying
+**Bee Group** is the holding above the brands Demis created: Bee Lab
+Studio, Bee Lab Academy, Bee Creator Studio, BeeVideoEditor. It is not a
+legal entity yet. Its group structure and the Bee family brand system live
+in `~/repos/beegroup`; the family's shared layer is
+`~/repos/beegroup/.github/skills/identidade-marca-bee-group/SKILL.md`.
+In his words: *"Eu sou Bee."* The personal brand is the person at the
+centre of that family. It carries the family colour without copying
 any single company, and also has to carry UFlowApp, talks and a career
 beyond any one business.
 
-- **Shared with the whole Bee family:** the amber yellows (§2.1), anchored
-  on Honey `#FFC107`, identical in every Bee brand. Yellow always leads.
+- **Shared with the whole Bee family:** the amber family, neutral rules,
+  approved pairings and interaction rules (Bee Group §2–§4), anchored on
+  Honey `#FFC107`, identical in every Bee brand. Yellow always leads.
 - **Owned by the personal brand:** typography, the companion colours as
   used here, warm neutrals, the highlighter, the portrait as primary mark.
 - **Owned by BLS, never used here:** hexagons, honeycomb patterns, bee
@@ -57,24 +61,28 @@ beyond any one business.
 
 ## 2. Colour system
 
+Amber family and neutral rules:
+`~/repos/beegroup/.github/skills/identidade-marca-bee-group/SKILL.md` §2–§4.
+
 Three layers. **Yellow leads**, as in every Bee brand. Neutrals carry
 text and calm, and the companions add range without leaving the family.
 
-### 2.1 Amber family (the Bee yellows)
+### 2.1 Amber family (shared, from Bee Group)
 
-Taken from the **Material Design Amber scale**, which the Bee brands
-already use: BLS uses 50 and 500, Bee Creator Studio 300, 500 and 600, and
-BeeVideoEditor's default caption highlight is A400. The steps are spaced
-far enough apart that none of them reads as a "wrong yellow" next to
-another.
+Bee Group owns the values (§2: Creme, Mel, Honey, Âmbar, Ocre, plus the
+UI-only hover and pressed states), the family-wide colour rules (§2–§3)
+and the pairings between the ambers and Ink/Paper (§4). This guide never
+re-declares them; it only says how the personal brand uses each step:
 
-| Token | Name | HEX | RGB | Scale | Role |
-|---|---|---|---|---|---|
-| `--creme` | Creme | `#FFF8E1` | 255 248 225 | Amber 50 | Yellow-tinted light background: covers, quote slides, cards on Paper |
-| `--mel` | Mel | `#FFE082` | 255 224 130 | Amber 200 | Soft fills and blocks; labels and secondary accents on dark backgrounds; chart step |
-| `--honey` | Honey | `#FFC107` | 255 193 7 | Amber 500 | **The signature.** Highlighter, avatar circle, CTAs, honey covers. Identical in every Bee brand, never altered |
-| `--ambar` | Âmbar | `#FF8F00` | 255 143 0 | Amber 800 | Hot accent and loud cover background; deepest chart step |
-| `--ocre` | Ocre | `#8A5A00` | 138 90 0 | custom | The only yellow that works as **text on light** (5.6:1): labels, big numbers, small accents on Paper/Creme |
+| Step | Personal-brand role |
+|---|---|
+| Creme | Yellow-tinted light background: covers, quote slides, cards on Paper |
+| Mel | Soft fills and blocks; labels and secondary accents on dark backgrounds; chart step |
+| Honey | **The signature.** Highlighter, avatar circle, CTAs, honey covers |
+| Âmbar | Hot accent and loud cover background; deepest chart step |
+| Ocre | The only amber for **text on light**: labels, big numbers, small accents on Paper/Creme |
+
+The hover and pressed states are for site UI only, never in graphics.
 
 ### 2.2 Neutrals
 
@@ -101,7 +109,7 @@ rule below is the law.
 | `--petroleo` | Petróleo | `#11484B` | 17 72 75 | Cool, calm counterweight | Antes/depois de clientes |
 | `--brasa` | Brasa | `#B8430F` | 184 67 15 | Analogous, hotter: alert | Mitos sobre IA |
 
-*Bastidores* (behind the scenes at BLS and Grupo Bee) uses no companion:
+*Bastidores* (behind the scenes at BLS and Bee Group) uses no companion:
 only the amber family and neutrals. Noite is the navy the *QA-First* talk
 deck already uses, kept for continuity. BeeVideoEditor's `noite` (navy)
 and `laranja` (orange) styles are the in-family precedent for a blue and
@@ -113,17 +121,20 @@ physical swatch book against the screen colours).
 
 ### Approved pairings (WCAG 2.1, computed)
 
+The pairings between the ambers and Ink/Paper are in Bee Group §4. This
+table lists only the pairings that involve the personal brand's own colours
+(Stone, Ash, Graphite and the companions).
+
 Read by background. "Large only" = ≥24px bold or ≥32px regular on screen
 (≥64px bold on a 1080 canvas), and UI shapes.
 
 | Background | Text, any size (≥4.5:1) | Large only (≥3:1) | Never as text |
 |---|---|---|---|
-| Paper | Ink 16.4 · Ocre 5.6 · Stone 5.4 · Brasa 5.1 | n/a | Honey 1.5 · Âmbar 2.2 · Mel · Creme |
-| Creme | Ink 16.3 · Ocre 5.6 · Stone 5.4 | n/a | Honey · Mel · Âmbar · Brasa (see rules) |
-| Mel | Ink 13.4 · Ocre 4.6 | Stone 4.46 | Paper · Honey |
-| Honey | Ink 10.7 | Ocre 3.6 · Stone 3.5 | Paper / white 1.6 · Mel · Âmbar |
-| Âmbar | Ink 7.6 | n/a | Paper 2.2 · any yellow |
-| Ink | Paper 16.4 · Creme 16.3 · Mel 13.4 · Honey 10.7 · Âmbar 7.6 · Ash 6.4 | n/a | Ocre · Brasa · Noite · Petróleo |
+| Paper | Stone 5.4 · Brasa 5.1 | n/a | n/a |
+| Creme | Stone 5.4 | n/a | Brasa (see rules) |
+| Mel | n/a | Stone 4.46 | n/a |
+| Honey | n/a | Stone 3.5 | n/a |
+| Ink | Ash 6.4 | n/a | Brasa · Noite · Petróleo |
 | Graphite | Paper 14.0 · Honey 9.1 · Âmbar 6.5 · Ash 5.5 | n/a | Ocre · Brasa |
 | Noite | Paper 13.0 · Creme 13.0 · Mel 10.7 · Honey 8.5 · Âmbar 6.0 · Ash 5.1 | n/a | Ocre · Brasa · Petróleo |
 | Petróleo | Paper 9.6 · Creme 9.6 · Mel 7.9 · Honey 6.3 | Âmbar 4.47 · Ash 3.8 | Ocre · Brasa · Noite |
@@ -149,12 +160,9 @@ tells someone an element is clickable.
 - **No Brasa on Creme as a pattern.** Cream plus burnt orange is the
   overused "editorial cream + terracotta" look. Brasa pieces sit on Paper,
   Ink or a Brasa background.
-- **Charts and data:** sequential scale Creme → Mel → Honey → Âmbar →
-  Ocre. Use the piece's companion only for the one series being called out.
-- **Links:** on light, Ink text with a 2px Honey underline
-  (`text-underline-offset: 0.2em`); on dark backgrounds, Honey text.
-- **Primary CTA:** Honey fill + Ink text; on Honey or Âmbar backgrounds,
-  Ink fill + Honey text.
+- **Charts, links, primary CTA, focus ring and text selection** follow the
+  family rules (Bee Group §2 "Rules" and §4 "Interaction rules"). Charts
+  use the piece's companion for the one series being called out.
 - **Light and dark** are both first-class on the web. Dark: Ink background,
   Paper text, Ash secondary, Graphite surfaces. Light: Paper background,
   Ink text, Stone secondary. Yellows are identical in both.
@@ -162,11 +170,8 @@ tells someone an element is clickable.
   only: the amber steps exist so you never need a tint.
 - **Deprecated yellows, replace on sight:** `#FFDE59` (current avatar
   circle), `#F5C842` / `#E0B52E` (current site accent), `#F9E795` (talk
-  deck "gold"). Any yellow not in §2.1 is off-brand. Bee Creator Studio's
-  `#FFD54F` / `#FFB300` are its app's hover and pressed states; don't use
-  them in graphics.
-- Third-party colours (WhatsApp green, LinkedIn blue, etc.) are allowed only
-  on those platforms' own icons/buttons, never as decoration.
+  deck "gold"). Any yellow not in Bee Group §2 is off-brand.
+- Third-party colours: family rule (Bee Group §2).
 
 ---
 
@@ -437,7 +442,7 @@ Language: **pt-BR** for audience-facing copy (matches site and talks;
 
 ```css
 :root {
-  /* Amber family (Material Amber scale, shared by the Bee brands) */
+  /* Amber family: values owned by Bee Group §8. Change them there first. */
   --creme:      #FFF8E1; /* Amber 50  */
   --mel:        #FFE082; /* Amber 200 */
   --honey:      #FFC107; /* Amber 500 */
@@ -486,7 +491,12 @@ Language: **pt-BR** for audience-facing copy (matches site and talks;
 }
 
 ::selection { background: var(--honey); color: var(--ink); }
-:focus-visible { outline: 2px solid var(--honey); outline-offset: 2px; }
+/* Focus ring: Ink on light, Honey on dark only (Bee Group §4). A Honey
+   ring on Paper is 1.5:1 and fails WCAG 1.4.11 (3:1). */
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+@media (prefers-color-scheme: dark) {
+  :focus-visible { outline-color: var(--honey); }
+}
 ```
 
 Stone on white (`--surface` in light) is 5.8:1, so it passes too.
@@ -514,9 +524,11 @@ Audit of this repo on 2026-10-16. Nothing has been migrated yet.
 
 Before publishing any piece:
 
-- [ ] Only palette colours; every yellow is one of the five in §2.1
+- [ ] The Bee family checklist passes (Bee Group §9)
+- [ ] Only palette colours; every yellow is one of the five Bee Group §2
+      brand colours (hover/pressed states only in site UI)
 - [ ] At least one amber-family colour; at most one companion
-- [ ] Every text/background pair is in the approved pairings table
+- [ ] Every text/background pair is in Bee Group §4 or the pairings table in §2
 - [ ] Bricolage for display, Geist for text, Geist Mono only for code
 - [ ] At most one highlight, Ink text inside it
 - [ ] No text below 28px on a 1080 canvas
@@ -540,7 +552,8 @@ Name the exact deviation when flagging it (*"title uses `#FFDE59`, should be
 5. **Pantone** for the palette, at the first print job.
 6. **Assets to produce:** re-exported avatar (§4.1), transparent cutout
    without circle, vector monogram and favicon set (§4.3).
-7. **Grupo Bee as a documented umbrella:** the amber scale in §2.1 is
-   written down here for the first time. If the other Bee brands should
-   follow it too, move §2.1 to a shared Grupo Bee note (second brain or
-   `beelabstudio/ai`) and have every Bee brand reference that one source.
+7. ~~**Bee Group as a documented umbrella**~~ **Closed 2026-10-17.** The
+   amber family moved to the Bee Group brand system,
+   `~/repos/beegroup/.github/skills/identidade-marca-bee-group/SKILL.md`,
+   which every Bee brand references for the shared layer. §2.1 now points
+   there.
