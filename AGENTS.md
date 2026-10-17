@@ -93,10 +93,11 @@ repos:
 - `.github/workflows/deploy.yml` deploys **every push to `main`** over FTPS
   to GoDaddy hosting (remote dir `demismeneghetti.com.br/`), using the
   `FTP_SERVER` / `FTP_USERNAME` / `FTP_PASSWORD` / `FTP_PORT` repo secrets.
-- It uploads the whole repo except `.git*`, `.github/**`, `node_modules`,
-  `README.md`, `.DS_Store` and `*.log`. Anything else committed is
-  **published**: never commit drafts, notes or private files outside
-  `.github/`.
+- It uploads the whole repo except `.git*`, `.github/**`, `.claude/**`,
+  `AGENTS.md`, `CLAUDE.md`, `node_modules`, `README.md`, `.DS_Store` and
+  `*.log`. Anything else committed is **published**: never commit drafts,
+  notes or private files outside those paths. The excludes only stop new
+  uploads; the action never deletes remote files.
 - Migrating to the Coolify stack is an open decision for Demis. Don't
   migrate unasked, and don't add new FTP workflows.
 - Domain/DNS: `demismeneghetti.com.br`, served by the GoDaddy hosting above.
@@ -142,6 +143,18 @@ contain rules not derivable from the code.
 > (index) and `~/repos/ai/AGENTS.md` (repo rules) — the table above lists
 > only the ones this project actually uses.
 
+### Task Observer (active every session)
+
+`.claude/skills/task-observer/SKILL.md` is active in this repo (a committed
+symlink to `~/repos/ai/skills/process/task-observer/`, from the
+`beelabstudio/ai` catalog). It watches work sessions for recurring patterns
+and corrections worth turning into a new or improved skill. Its own
+frontmatter states that description-matching alone isn't a reliable
+trigger, so **run its Session Start Protocol at the start of any multi-step
+session here.** The symlink target is absolute, so it resolves only on
+Demis's Mac; elsewhere, read the skill from a local clone of
+`beelabstudio/ai`.
+
 ## Second Brain (Obsidian)
 
 Demis keeps two separate private vaults, and the split matters:
@@ -172,3 +185,8 @@ Demis keeps two separate private vaults, and the split matters:
 - 2026-10-17: brand identity skill added. The site, avatar and talk deck are
   **not** migrated to it yet; its §10 lists the exact gaps.
 - Still on the legacy FTP/GoDaddy deploy; Coolify migration undecided.
+- 2026-10-17: `demismeneghetti.com.br` does **not** resolve (NXDOMAIN on
+  public DNS), and registro.br's whois shows it in `release process:
+  waiting`, i.e. expired and not renewed. Deploys still succeed because FTP
+  goes to the GoDaddy host directly, but the site is unreachable. Renewal
+  or re-registration is Demis's call; don't assume the site is live.
