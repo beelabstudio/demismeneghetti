@@ -1,0 +1,13 @@
+# Default-deny: the repo root also holds agent files, workflows and the talk's Node examples.
+# Only what is re-included below can ever be published (nginx serves everything in the image).
+*
+!index.html
+!style.css
+!assets/
+!talks/
+
+# Inside talks/: slides only, not the Jest demo, its notes or placeholders.
+talks/**/examples
+**/README.md
+**/.gitkeep
+**/.DS_Store
