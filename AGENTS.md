@@ -85,24 +85,26 @@ unless this project has a documented reason not to.
   Bee Lab Studio second brain (path below). Read it before touching
   `.env`/deploy config.
 
-### This repo: legacy FTP deploy
+### This repo: Coolify static site
 
-This site predates the shared Coolify server and is one of the legacy
-repos:
+Migrated off the legacy GoDaddy FTP deploy (the FTP workflow is removed).
 
-- `.github/workflows/deploy.yml` deploys **every push to `main`** over FTPS
-  to GoDaddy hosting (remote dir `demismeneghetti.com.br/`), using the
-  `FTP_SERVER` / `FTP_USERNAME` / `FTP_PASSWORD` / `FTP_PORT` repo secrets.
-- It uploads the whole repo except `.git*`, `.github/**`, `.claude/**`,
-  `AGENTS.md`, `CLAUDE.md`, `node_modules`, `README.md`, `.DS_Store` and
-  `*.log`. Anything else committed is **published**: never commit drafts,
-  notes or private files outside those paths. The excludes only stop new
-  uploads; the action never deletes remote files.
-- Migrating to the Coolify stack is an open decision for Demis. Don't
-  migrate unasked, and don't add new FTP workflows.
-- Domain/DNS: `demismeneghetti.com.br`, served by the GoDaddy hosting above.
-  Registrar and DNS provider are not documented yet; confirm with Demis
-  before touching DNS.
+- Coolify app `demismeneghetti` (project `demismeneghetti`, app uuid
+  `uwspcdfky2nta2xbte9kwq9p`), Dockerfile build pack with the "static site"
+  toggle **off**, auto-deploy on push via the GitHub App webhook. Domains:
+  `demismeneghetti.com.br` and `www` (301 to apex).
+- `Dockerfile` = `nginx:alpine` with security headers, CSP, cache policy and
+  the www redirect inlined. `.dockerignore` **denies everything by default**:
+  a new file is published only if you add an `!allow` line for it. Keep the CSP
+  in sync with the real third parties (Google Fonts, `api.qrserver.com` for the
+  talk's QR code); no inline `<script>` or `style=""` attributes.
+- Test before pushing: `docker build -t x . && docker run --rm -p 8089:80 x`,
+  then `curl -H "Host: demismeneghetti.com.br" localhost:8089/AGENTS.md` must
+  be 404.
+- DNS moves to Cloudflare (zone `demismeneghetti.com.br`, A records DNS-only to
+  `157.90.248.192`). The domain is registered at Registro.br; the nameservers
+  are changed there. After the cutover redeploy once so Traefik issues the
+  Let's Encrypt certificate, then set Cloudflare SSL to strict.
 
 ## Git & commit workflow
 
@@ -184,9 +186,12 @@ Demis keeps two separate private vaults, and the split matters:
   demo.
 - 2026-10-17: brand identity skill added. The site, avatar and talk deck are
   **not** migrated to it yet; its §10 lists the exact gaps.
-- Still on the legacy FTP/GoDaddy deploy; Coolify migration undecided.
+- 2026-10-18: hosting migrated to Hetzner/Coolify (see "This repo"); the
+  image is deployed and validated on the server by IP, FTP workflow removed.
 - 2026-10-17: `demismeneghetti.com.br` does **not** resolve (NXDOMAIN on
   public DNS), and registro.br's whois shows it in `release process:
-  waiting`, i.e. expired and not renewed. Deploys still succeed because FTP
-  goes to the GoDaddy host directly, but the site is unreachable. Renewal
-  or re-registration is Demis's call; don't assume the site is live.
+  waiting`, i.e. expired and not renewed (rechecked 2026-10-18). The site is
+  unreachable until the domain is renewed or re-registered and the
+  nameservers point to Cloudflare. Pending: Cloudflare zone and records,
+  nameserver change at Registro.br, certificate redeploy. Don't assume the
+  site is live.
