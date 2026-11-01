@@ -10,7 +10,7 @@
      CONSTANTS
      ---------------------------------------------------------------- */
   const TOTAL            = 20;
-  const PRESENTATION_URL = 'https://demismeneghetti.com.br/talks/qa-first-in-the-age-of-ai/index.html';
+  const PRESENTATION_URL = 'https://demismeneghetti.com/talks/qa-first-in-the-age-of-ai/index.html';
   const QR_API           = 'https://api.qrserver.com/v1/create-qr-code/';
   const TRANSITION       = 450; // ms — matches CSS var(--t-slide)
 
