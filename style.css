@@ -97,6 +97,30 @@ body {
   text-decoration: underline;
 }
 
+/* Value proposition: hook (question) + factual answer, between bio and CTA */
+.pitch {
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+  max-width: 340px;
+}
+
+.pitch-hook {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.2px;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+}
+
+.pitch-body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  text-wrap: balance;
+}
+
 /* CTA label */
 .cta-label {
   font-size: 0.8rem;
