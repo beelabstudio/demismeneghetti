@@ -155,11 +155,6 @@ body {
   color: var(--accent);
 }
 
-.link-btn.linkedin:hover {
-  border-color: #0a66c2;
-  color: #0a66c2;
-}
-
 .link-btn.instagram:hover {
   border-color: #e1306c;
   color: #e1306c;
