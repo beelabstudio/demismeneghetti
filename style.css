@@ -100,7 +100,7 @@ body {
 /* Value proposition: hook (question) + factual answer, between bio and CTA */
 .pitch {
   margin-top: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 2.5rem;
   max-width: 340px;
 }
 
@@ -119,14 +119,6 @@ body {
   line-height: 1.6;
   color: var(--text-secondary);
   text-wrap: balance;
-}
-
-/* CTA label */
-.cta-label {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-  margin-top: 0.25rem;
 }
 
 /* Contact Links */
@@ -257,7 +249,16 @@ body {
 /* Responsive */
 @media (max-width: 480px) {
   .card {
-    padding: 2rem 1.5rem 1.75rem;
+    padding: 2rem 1rem 1.75rem;
+  }
+
+  /* Keep the longer button labels on a single line down to 320px.
+     The font only shrinks below 360px (4vw < 0.9rem), above that it is unchanged. */
+  .link-btn {
+    gap: 0.6rem;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+    font-size: min(0.9rem, 4vw);
   }
 
   .name {
