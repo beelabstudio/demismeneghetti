@@ -161,6 +161,11 @@ body {
   color: #e1306c;
 }
 
+.link-btn.calendar:hover {
+  border-color: #4285f4;
+  color: #4285f4;
+}
+
 /* Company Section */
 .company-section {
   width: 100%;
