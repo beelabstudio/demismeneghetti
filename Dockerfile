@@ -14,7 +14,7 @@ add_header X-Frame-Options "DENY" always;
 add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" always;
 add_header Cross-Origin-Opener-Policy "same-origin" always;
-add_header Cross-Origin-Resource-Policy "same-origin" always;
+# Cross-Origin-Resource-Policy is set per location: images must load cross-origin (email signature, social embeds).
 # Third parties: Google Fonts (index.html) and api.qrserver.com (QR image on the last slide of the talk).
 add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https://api.qrserver.com; font-src https://fonts.gstatic.com; connect-src 'none'; form-action 'none'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'" always;
 EOF
@@ -34,10 +34,12 @@ server {
   }
 
   include /etc/nginx/snippets/security-headers.conf;
+  add_header Cross-Origin-Resource-Policy "same-origin" always;
 
   # Dotfiles are hidden, except /.well-known/ (security.txt, ACME-style files).
   location ^~ /.well-known/ {
     include /etc/nginx/snippets/security-headers.conf;
+    add_header Cross-Origin-Resource-Policy "same-origin" always;
     try_files $uri =404;
   }
 
@@ -46,8 +48,10 @@ server {
   }
 
   # Images: cache for a week (file names are not content-hashed, so no "immutable").
+  # cross-origin so other sites and mail clients (Gmail signature) can embed them.
   location ~* \.(png|jpe?g|svg|ico|webp|avif|woff2)$ {
     include /etc/nginx/snippets/security-headers.conf;
+    add_header Cross-Origin-Resource-Policy "cross-origin" always;
     add_header Cache-Control "public, max-age=604800" always;
     try_files $uri =404;
   }
@@ -55,6 +59,7 @@ server {
   # HTML, CSS and JS: always revalidate (cheap with ETag), so a deploy shows up immediately.
   location / {
     include /etc/nginx/snippets/security-headers.conf;
+    add_header Cross-Origin-Resource-Policy "same-origin" always;
     add_header Cache-Control "no-cache" always;
     try_files $uri $uri/ =404;
   }
